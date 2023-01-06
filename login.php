@@ -1,3 +1,10 @@
+<?php
+    ob_start();
+    session_start();
+    if (isset($_SESSION['logged_in'])) {
+        header("location: student_dahboard.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
 
@@ -31,7 +38,7 @@
                     if ($password_== $row['password']) {
                         $_SESSION['logged_in']=true;
                         $_SESSION['user_id']=$row['id'];
-                        header("location: home.php");
+                        header("location: student_dashboard.php");
                     }  
                     else {
                         $message.="<div class='alert alert-danger' role='alert'>Incorrect password!</div>";

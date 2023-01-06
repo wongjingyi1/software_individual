@@ -1,3 +1,6 @@
+<?php 
+    include "reusable_components/user_session.php"
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -24,8 +27,8 @@
             <div>Dashboard</div>
             <div class="d-flex justify-content-center align-items-center">
                 <i class="fa-solid fa-bell fa-2x pe-2"></i>
-                <div>Username</div>
-                <img src="images/no_people_img.png" alt="" class="rounded" width="30px">
+                <div><?php echo $username_ ?></div>
+                <img src=<?php $image_==NULL  ? echo "images/no_people_img.png" : echo "images/".$image_ ?> alt="" class="rounded" width="30px">
             </div>
         </div>
     </div>

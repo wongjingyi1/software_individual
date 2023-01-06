@@ -28,7 +28,7 @@
             <div class="d-flex justify-content-center align-items-center">
                 <i class="fa-solid fa-bell fa-2x pe-2"></i>
                 <div><?php echo $username_ ?></div>
-                <img src=<?php $image_==NULL  ? echo "images/no_people_img.png" : echo "images/".$image_ ?> alt="" class="rounded" width="30px">
+                <img src="images/no_people_img.png" alt="" class="rounded" width="30px">
             </div>
         </div>
     </div>

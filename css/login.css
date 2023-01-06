@@ -1,12 +1,3 @@
-.box1 {
-    margin-top: 100px;
-    border-radius: 15px;
-    height:200px;
-    display: flex;
-    align-items: center;
-}
-
-.login_box {
-    margin-top: 15px;
-    height:200px;
+.background_color1 {
+    background-color: #808080;
 }

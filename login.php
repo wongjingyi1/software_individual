@@ -2,7 +2,7 @@
     ob_start();
     session_start();
     if (isset($_SESSION['logged_in'])) {
-        header("location: student_dahboard.php");
+        header("location: student_dashboard.php");
     }
 ?>
 <!DOCTYPE html>

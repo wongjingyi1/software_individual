@@ -10,7 +10,7 @@
 </head>
 
 <body class="container background_color1">
-    <div class="background_color1 mt-5 mb-5 pb-5">
+    <div class="background_color1 mt-5 mb-5 pb-4">
         <div class="text-center pt-5">
             <h1>Online Complaint Portal</h1>
             <p>Did somethings bother you ? <a href="">let us know</a></p>

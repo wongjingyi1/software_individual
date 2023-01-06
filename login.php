@@ -10,6 +10,49 @@
 </head>
 
 <body class="container background_color1">
+<?php
+    $message="";
+    if ($_POST) {
+        $message="";
+        $username_ = isset($_POST['username_']) ? $_POST['username_'] : NULL;
+        $password_ = isset($_POST['password_']) ? $_POST['password_'] : NULL;
+        if ($username_ != NULL && $password_ != NULL) {
+            include 'config/database.php';
+
+            try {
+                $query = "SELECT * from student WHERE username = :username_";
+                $stmt = $con->prepare($query);
+                $stmt->bindParam(":username_", $username_);
+                $stmt->execute();
+                $num = $stmt->rowCount();
+
+                if ($num > 0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($password_== $row['password']) {
+                        $_SESSION['logged_in']=true;
+                        $_SESSION['user_id']=$row['id'];
+                        header("location: home.php");
+                    }  
+                    else {
+                        $message.="<div class='alert alert-danger' role='alert'>Incorrect password!</div>";
+                    }
+                } else {
+                    $message.="<div class='alert alert-danger' role='alert'>User not found! (Invalid account)</div>";
+                }
+            }
+
+            // show error
+            catch (PDOException $exception) {
+                die('ERROR: ' . $exception->getMessage());
+            }
+        } else {
+            $message.="<div class='alert alert-danger' role='alert'>Account username and password cannot be empty!</div>";
+        }
+    }
+    if ($message!="") {
+        echo "<div class='mt-3'>$message</div>";
+    }
+?>
     <div class="background_color1 mt-5 mb-5 pb-4">
         <div class="text-center pt-5">
             <h1>Online Complaint Portal</h1>
@@ -20,15 +63,15 @@
 
             <div class="d-flex m-3">
                 <div class="col-lg-9 d-lg-block col-12">
-                    <form class="p-5">
+                    <form class="p-5" method="POST">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Username</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="text" class="form-control" id="exampleInputEmail1" name='username_'>
                             <div id="emailHelp" class="form-text">Your username must be same as your ID.</div>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <input type="password" class="form-control" id="exampleInputPassword1" name='password_'>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

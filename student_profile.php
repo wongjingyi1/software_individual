@@ -14,18 +14,14 @@
 </head>
 
 <body>
-    <div class="border-dark border-bottom py-2">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <div>Profile</div>
-            <div class="d-flex justify-content-center align-items-center">
-                <i class="fa-solid fa-bell fa-2x pe-2"></i>
-                <div>Username</div>
-                <img src="images/no_people_img.png" alt="" class="rounded" width="30px">
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
+<?php include "student_nvgtop.php" ?>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Profile</h1>
+    </div><!-- End Page Title -->
+    <section class="container section">
         <div class="d-flex mt-5">
             <div class="col-3 text-center">
                 <img src="images/profile_pic.png" width="150px">
@@ -61,7 +57,8 @@
             </div>
         </div>
 
-    </div>
+    </section>
+</main>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

@@ -61,7 +61,7 @@
                         <input type="password" class="form-control" name='password' id="exampleInputPassword1">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputcontact" class="form-label">Contact</label>
+                        <label for="exampleInputcontact" class="form-label">Confirm Password</label>
                         <input type="contact" class="form-control" id="exampleInputcontact">
                     </div>
                     <div class="d-flex mt-5">

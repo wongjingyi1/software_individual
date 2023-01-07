@@ -5,7 +5,7 @@
       <img src="img/logo.png" alt="">
       <span class="d-none d-lg-block">e-Complaint</span>
     </a>
-    <i class="bi bi-list toggle-sidebar-btn"></i>
+    <i class="fa-solid fa-bars toggle-sidebar-btn"></i>
   </div><!-- End Logo -->
 
   <nav class="header-nav ms-auto">

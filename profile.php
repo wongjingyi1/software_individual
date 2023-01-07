@@ -1,5 +1,5 @@
-<?php 
-    include "reusable_components/user_session.php"
+<?php
+//include "reusable_components/user_session.php"
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -18,64 +18,76 @@
 
 <body>
 
-    <?php 
-        include 'config/database.php';
-        $query1 = "SELECT * from student WHERE id = :id ";
-        $stmt1 = $con->prepare($query1);
-        $stmt1->bindParam(":id", $_SESSION['user_id']);
-        $stmt1->execute();
-        $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
-        
-        $email_=$row1['email'];
-        $image=$row1['image']==NULL ? "images/profile_pic.png" : "images/".$row1['image'] ;
-        $role=$row1['role'];
+    <?php
+    // include 'config/database.php';
+
+    // try {
+    //     // prepare select query
+    //     $query_user = "SELECT * from student WHERE id = :id ";
+    //     $stmt_user = $con->prepare($query_user);
+
+    //     $stmt1->bindParam(":id", $_SESSION['user_id']);
+    //     // execute our query
+    //     $stmt_user->execute();
+    //     $row_user = $stmt_user->fetch(PDO::FETCH_ASSOC);
+
+    //     $email_ = $row_user['email'];
+    //     $image = $row_user['image'] == NULL ? "images/profile_pic.png" : "images/" . $row_user['image'];
+    //     $role = $row_user['role'];
+    // }
+
+    // // show error
+    // catch (PDOException $exception) {
+    //     die('ERROR: ' . $exception->getMessage());
+    // }
+
     ?>
-<?php include "student_nvgtop.php" ?>
+    <?php include "nvgtop.php" ?>
 
-<main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Profile</h1>
-    </div><!-- End Page Title -->
-    <section class="container section">
-        <div class="d-flex mt-5">
-            <div class="col-3 text-center">
-                <img src="<?php echo $image ?>" width="150px">
-                <button type="button" class="btn btn-info mt-4 col-10">Edit Image</button>
-                <div class="m-4 text-start">
-                    <label for="formGroupExampleInput" class="form-label">Role</label>
-                    <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php echo $role ?>" disabled>
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Profile</h1>
+        </div><!-- End Page Title -->
+        <section class="container section">
+            <from class="d-flex mt-5" action="<?php //echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
+                <div class="col-3 text-center">
+                    <img src="<?php //echo $image ?>" width="150px">
+                    <input type='file' name='image' class="btn btn-info mt-4 col-10"/>
+                    <div class="m-4 text-start">
+                        <label for="formGroupExampleInput" class="form-label">Role</label>
+                        <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php //echo $role ?>" disabled>
+                    </div>
                 </div>
-            </div>
-            <div class="col-9 ms-5">
-                <form>
-                    <div class="mb-3">
-                        <label for="exampleInputUsername" class="form-label">Username</label>
-                        <input type="username" class="form-control" id="exampleInputusername" aria-describedby="username" name='username' value="<?php echo htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : $username_, ENT_QUOTES);  ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail" class="form-label">Email</label>
-                        <input type="Email" class="form-control" id="exampleInputEmail" name='email' value="<?php echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" name='password' id="exampleInputPassword1">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputcontact" class="form-label">Confirm Password</label>
-                        <input type="contact" class="form-control" id="exampleInputcontact">
-                    </div>
-                    <div class="d-flex mt-5">
-                        <button type="submit" class="btn btn-secondary col-4">Update</button>
-                        <button type="button" class="btn btn-secondary ms-3 col-4" onclick="window.location.href = 'student_dashboard.php'">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                <div class="col-9 ms-5">
+                    <form>
+                        <div class="mb-3">
+                            <label for="exampleInputUsername" class="form-label">Username</label>
+                            <input type="username" class="form-control" id="exampleInputusername" aria-describedby="username" name='username' value="<?php //echo htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : $username_, ENT_QUOTES);  ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail" class="form-label">Email</label>
+                            <input type="Email" class="form-control" id="exampleInputEmail" name='email' value="<?php //echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" name='password' id="exampleInputPassword1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputcontact" class="form-label">Confirm Password</label>
+                            <input type="contact" class="form-control" id="exampleInputcontact">
+                        </div>
+                        <div class="d-flex mt-5">
+                            <button type="submit" class="btn btn-secondary col-4">Update</button>
+                            <button type="button" class="btn btn-secondary ms-3 col-4" onclick="window.location.href = 'student_dashboard.php'">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
 
-    </section>
-</main>
+        </section>
+    </main>
 
-<script src="js/main.js"></script>
+    <script src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 

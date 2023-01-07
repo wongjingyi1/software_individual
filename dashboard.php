@@ -23,7 +23,7 @@ include "reusable_components/user_session.php"
 </head>
 
 <body>
-    <?php include "student_nvgtop.php" ?>
+    <?php include "nvgtop.php" ?>
 
     <main id="main" class="main">
         <div class="pagetitle">

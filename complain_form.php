@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<?php include "student_nvgtop.php" ?> 
+<?php include "nvgtop.php" ?> 
 <main id="main" class="main">
         <div class="pagetitle">
             <h1>Complaint Form</h1>

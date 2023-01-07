@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <?php include "student_nvgtop.php" ?>
+    <?php include "nvgtop.php" ?>
 
     <main id="main" class="main">
         <div class="pagetitle">
@@ -55,7 +55,7 @@
                         <td>Executive</td>
                         <td>Status</td>
                         <td>Last Updated</td>
-                        <td><i class="fa-solid fa-eye fa-2x"></i></td>
+                        <td><i class="fa-solid fa-eye "></i></td>
                     </tr>
                 </table>
             </div>

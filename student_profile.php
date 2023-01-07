@@ -1,3 +1,6 @@
+<?php 
+    include "reusable_components/user_session.php"
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -15,6 +18,18 @@
 
 <body>
 
+    <?php 
+        include 'config/database.php';
+        $query1 = "SELECT * from student WHERE id = :id ";
+        $stmt1 = $con->prepare($query1);
+        $stmt1->bindParam(":id", $_SESSION['user_id']);
+        $stmt1->execute();
+        $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+        
+        $email_=$row1['email'];
+        $image=$row1['image']==NULL ? "images/profile_pic.png" : "images/".$row1['image'] ;
+        $role=$row1['role'];
+    ?>
 <?php include "student_nvgtop.php" ?>
 
 <main id="main" class="main">
@@ -24,26 +39,26 @@
     <section class="container section">
         <div class="d-flex mt-5">
             <div class="col-3 text-center">
-                <img src="images/profile_pic.png" width="150px">
+                <img src="<?php echo $image ?>" width="150px">
                 <button type="button" class="btn btn-info mt-4 col-10">Edit Image</button>
                 <div class="m-4 text-start">
                     <label for="formGroupExampleInput" class="form-label">Role</label>
-                    <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="What role for this" disabled>
+                    <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php echo $role ?>" disabled>
                 </div>
             </div>
             <div class="col-9 ms-5">
                 <form>
                     <div class="mb-3">
                         <label for="exampleInputUsername" class="form-label">Username</label>
-                        <input type="username" class="form-control" id="exampleInputusername" aria-describedby="username">
+                        <input type="username" class="form-control" id="exampleInputusername" aria-describedby="username" name='username' value="<?php echo htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : $username_, ENT_QUOTES);  ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email</label>
-                        <input type="Email" class="form-control" id="exampleInputEmail">
+                        <input type="Email" class="form-control" id="exampleInputEmail" name='email' value="<?php echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                        <input type="password" class="form-control" name='password' id="exampleInputPassword1">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputcontact" class="form-label">Contact</label>
@@ -51,7 +66,7 @@
                     </div>
                     <div class="d-flex mt-5">
                         <button type="submit" class="btn btn-secondary col-4">Update</button>
-                        <button type="submit" class="btn btn-secondary ms-3 col-4">Cancle</button>
+                        <button type="button" class="btn btn-secondary ms-3 col-4" onclick="window.location.href = 'student_dashboard.php'">Cancel</button>
                     </div>
                 </form>
             </div>

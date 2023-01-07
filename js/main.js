@@ -319,9 +319,3 @@
 
 })();
 
-/**
- * rotate sidebar icon
- */
-$(".rotate").click(function(){
-  $(this).toggleClass("down")  ; 
- })

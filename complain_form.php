@@ -28,20 +28,6 @@
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <div class="text-decoration-underline py-4">Add New:</div>
                 <div class="row">
-                    <div class="d-flex col-12 pb-3 container">
-                        <label for="category" class="form-label col-4 me-2">Category</label>
-                        <select class="form-select" id="category" name="category">
-                            <option value="-1">Default</option>
-                            <option value="1">Classes</option>
-                            <option value="2">Bulding</option>
-                            <option value="3">Teachers</option>
-                            <option value="4">Grades</option>
-                            <option value="5">Communication</option>
-                            <option value="6">Lunch</option>
-                        </select>
-                    </div>
-
-
                     <div class="col-4 pb-3">Title</div>
                     <div class="col-8 pb-3">
                         <input type="text" name="title" class='form-control'>

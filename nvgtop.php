@@ -6,7 +6,7 @@
         <img src="img/logo.png" alt="">
         <span class="d-none d-lg-block">e-Complaint</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <i class="fa-solid fa-bars toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
@@ -143,7 +143,7 @@
          <i class="fa-solid fa-inbox"></i><span>Manage Complaint</span><i class="fa-solid fa-chevron-down ms-auto"></i>
         </a>
         <ul id="helpdesk" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>bi-chevron-down
+          <li>
             <a href="#">
               </i><span>Keep In View</span>
             </a>

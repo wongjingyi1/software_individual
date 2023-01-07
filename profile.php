@@ -14,6 +14,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <style>
+        input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+    </style>
+
 </head>
 
 <body>
@@ -34,6 +46,12 @@
     //     $email_ = $row_user['email'];
     //     $image = $row_user['image'] == NULL ? "images/profile_pic.png" : "images/" . $row_user['image'];
     //     $role = $row_user['role'];
+    $store_image = "upload_user/";
+    if (!empty($row['image_cus']) && $row['image_cus'] != "NULL") {
+        $old_image = $store_image . $row['image_cus'];
+    } else {
+        $old_image = $store_image . "no_image.jpg";
+    }
     // }
 
     // // show error
@@ -42,6 +60,198 @@
     // }
 
     ?>
+<? if ($_POST) {
+            $uppercase = preg_match('@[A-Z]@', $_POST['new_pass']);
+            $lowercase = preg_match('@[a-z]@', $_POST['new_pass']);
+            $number    = preg_match('@[0-9]@', $_POST['new_pass']);
+
+            $image = !empty($_FILES["image"]["name"])
+                ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
+                : "NULL"; //pathinfo($old_image, PATHINFO_BASENAME);
+            $image = htmlspecialchars(strip_tags($image));
+
+            if (empty($image) && $image == "NULL") {
+                $image = $store_image . "no_image.jpg";
+            }
+            // error message is empty
+            $file_upload_error_messages = "";
+
+            if (empty($_POST['username'])) {
+                echo "<div class='alert alert-danger'>Please make sure have * column are not emplty!</div>";
+            } else {
+                if (!empty($_POST['old_pass']) || !empty($_POST['new_pass']) || !empty($_POST['con_pass'])) {
+                    if (empty($_POST['old_pass'])) {
+                        $file_upload_error_messages .= "<div>If want to change new passward then old password field can not be empty!</div>";
+                    }
+
+                    if (empty($_POST['new_pass'])) {
+                        $file_upload_error_messages .= "<div>If want to change new passward then new password field can not be empty!</div>";
+                    }
+
+                    if (empty($_POST['con_pass'])) {
+                        $file_upload_error_messages .= "<div>If want to change new passward then confirm password field can not be empty!</div>";
+                    }
+
+                    if (!empty($file_upload_error_messages)) {
+                        echo "<div class='alert alert-danger'>";
+                        echo "<div>{$file_upload_error_messages}</div>";
+                        echo "</div>";
+                    }
+                }
+
+                if (empty($file_upload_error_messages)) {
+                    if (strlen($_POST['username']) >= 6) {
+                        if (strpos(trim($_POST['username']), ' ')) {
+                            $file_upload_error_messages .= "<div>Username should not contain whitespace!</div>";
+                        }
+                    } else {
+                        $file_upload_error_messages .= "<div>Your username must contain at least 6 characters!</div>";
+                    }
+                    if (!empty($_POST['old_pass']) && md5($_POST['old_pass']) != $oldpassword) {
+                        $file_upload_error_messages .= "<div>Wong old password same  your current password!</div>";
+                    }
+
+                    if (!empty($_POST['old_pass']) && strlen($_POST['new_pass']) <= 8) {
+                        $file_upload_error_messages .= "<div>Your password must contain at least 8 characters!</div>";
+                    }
+
+                    if (!empty($_POST['old_pass']) && (!$uppercase || !$lowercase || !$number)) {
+                        $file_upload_error_messages .= "<div>Your password must contain at least one uppercase, one lowercase and one number!</div>";
+                    }
+
+                    if (!empty($_POST['old_pass']) && $_POST['new_pass'] !== $_POST['con_pass']) {
+                        $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";
+                    }
+
+                    if (((int)date_diff(date_create(date('Y-m-d')), date_create($_POST["date_of_birth"]))->format("%R%y")) >= -18) {
+                        $file_upload_error_messages .= "<div>You must be above 18 age old!</div>";
+                    }
+
+                    if (isset($_POST['images_remove']) && $_POST['images_remove'] != "" && !empty($_FILES['image']['name'])) {
+                        //isset vs empty dash
+                        $file_upload_error_messages .= "<div>Please note that you cannot select a new image while checking for image deletion, please select one.</div>";
+                    }
+                    if ($_POST['username'] !== $oldusername) {
+                        $query_username = "SELECT username FROM customers WHERE username=:username";
+                        $stmt_username = $con->prepare($query_username);
+                        $stmt_username->bindParam(':username', $_POST['username']);
+                        $stmt_username->execute();
+                        $num_user = $stmt_username->rowCount();
+                        if ($num_user > 0) {
+                            $file_upload_error_messages .= "<div>Username already exists! Please type again</div>";
+                        }
+                    }
+
+                    if (!empty($_FILES["image"]["name"])) {
+                        if ($image && $image != "NULL") {
+                            // upload to file to folder
+                            $target_directory = "upload_customer/";
+                            $target_file = $target_directory . $image; // uploads/(image name)
+                            $file_type = pathinfo($target_file, PATHINFO_EXTENSION); // find the image format like jpg, png ..
+                            // make sure that file is a real image
+                            $check = getimagesize($_FILES["image"]["tmp_name"]);
+
+                            if ($check !== false) {
+                                // submitted file is an image
+                                // make sure certain file types are allowed
+                                $allowed_file_types = array("jpg", "jpeg", "png", "gif");
+                                if (!in_array($file_type, $allowed_file_types)) {
+                                    $file_upload_error_messages .= "<div>Only JPG, JPEG, PNG, GIF files are allowed.</div>";
+                                }
+                                // make sure file does not exist
+                                if (file_exists($target_file)) {
+                                    $file_upload_error_messages .= "<div>Image already exists. Try to change file name.</div>";
+                                }
+                                // make sure submitted file is not too large, can't be larger than 1 MB
+                                if ($_FILES['image']['size'] > (1024000)) {
+                                    $file_upload_error_messages .= "<div>Image must be less than 1 MB in size.</div>";
+                                }
+                                // make sure the 'uploads' folder exists
+                                // if not, create it
+                                if (!is_dir($target_directory)) {
+                                    mkdir($target_directory, 0777, true);
+                                }
+                            } else {
+                                $file_upload_error_messages .= "<div>Submitted file is not an image.</div>";
+                            }
+                            // if $file_upload_error_messages is still empty
+                            if (empty($file_upload_error_messages)) {
+                                // it means there are no errors, so try to upload the file
+                                if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                                    // it means photo was uploaded
+                                    $file_upload_error_messages .= "<div>Unable to upload photo.</div>";
+                                }
+                            }
+                        }
+                    }
+
+
+                    // check if form was submitted
+                    if (!empty($file_upload_error_messages)) {
+                        echo "<div class='alert alert-danger'>";
+                        echo "<div>{$file_upload_error_messages}</div>";
+                        echo "</div>";
+                    } else {
+
+                        try {
+                            // write update query
+                            // in this case, it seemed like we have so many fields to pass and
+                            // it is better to label them and not use question marks
+                            $query = "UPDATE customers
+                        SET username=:username, password=:password,
+                        firstname=:firstname, lastname=:lastname, 
+                        gender=:gender, date_of_birth=:date_of_birth,
+                        account_status=:account_status, image_cus=:image WHERE id=:id";
+                            // prepare query for excecution
+                            $stmt = $con->prepare($query);
+                            // posted values
+                            $username = htmlspecialchars(strip_tags($_POST['username']));
+                            $firstname = htmlspecialchars(strip_tags($_POST['firstname']));
+                            $lastname = htmlspecialchars(strip_tags($_POST['lastname']));
+                            $gender = htmlspecialchars(strip_tags($_POST['gender']));
+                            $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
+                            if (!empty($_POST['new_pass'])) {
+                                $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
+                            }
+                            $account_status = htmlspecialchars(strip_tags($_POST['account_status']));
+                            // not checked and not upload new image
+                            $flag_same_image = false;
+                            if ($image == "NULL" && empty($_POST['images_remove'])) {
+                                $image = pathinfo($old_image, PATHINFO_BASENAME);
+                                $flag_same_image = true;
+                                // checked and not upload new image
+                            } else if ($image == "NULL" && !empty($_POST['images_remove'])) {
+                                $image = "NULL";
+                            }
+                            // bind the parameters
+                            $stmt->bindParam(':username', $username);
+                            $stmt->bindParam(':firstname', $firstname);
+                            $stmt->bindParam(':lastname', $lastname);
+                            $stmt->bindParam(':gender', $gender);
+                            $stmt->bindParam(':date_of_birth', $date_of_birth);
+                            $stmt->bindParam(':password', $oldpassword);
+                            $stmt->bindParam(':account_status', $account_status);
+                            $stmt->bindParam(':id', $id);
+                            $stmt->bindParam(':image', $image);
+                            // Execute the query
+                            if ($stmt->execute()) {
+                                // if the image not same then remove previous one and not the default one
+                                if (!$flag_same_image && !strpos($old_image, "no_image.jpg")) {
+                                    unlink($old_image);
+                                }
+                                echo "<script type=\"text/javascript\"> window.location.href='customer_read.php?action=sucessful'</script>";
+                            } else {
+                                echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                            }
+                        }
+                        // show errors
+                        catch (PDOException $exception) {
+                            die('ERROR: ' . $exception->getMessage());
+                        }
+                    }
+                }
+            }
+        } ?>
     <?php include "nvgtop.php" ?>
 
     <main id="main" class="main">
@@ -51,8 +261,9 @@
         <section class="container section">
             <from class="d-flex mt-5" action="<?php //echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <div class="col-3 text-center">
-                    <img src="<?php //echo $image ?>" width="150px">
-                    <input type='file' name='image' class="btn btn-info mt-4 col-10"/>
+                        <img src="<?php //echo $image ?>" width="150px">
+                        <label for="file-upload" class="btn btn-info mt-4 col-10">Custom Upload</label>
+                        <input id="file-upload" type="file" name="image"/>
                     <div class="m-4 text-start">
                         <label for="formGroupExampleInput" class="form-label">Role</label>
                         <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php //echo $role ?>" disabled>
@@ -69,12 +280,16 @@
                             <input type="Email" class="form-control" id="exampleInputEmail" name='email' value="<?php //echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" name='password' id="exampleInputPassword1">
+                            <label for="old_pass" class="form-label">Old Password</label>
+                            <input type="password" class="form-control" name='old_password' id="old_pass">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputcontact" class="form-label">Confirm Password</label>
-                            <input type="contact" class="form-control" id="exampleInputcontact">
+                            <label for="new_pass" class="form-label">New Password</label>
+                            <input type="password" class="form-control" name='new_password' id="new_pass">
+                        </div>
+                        <div class="mb-3">
+                            <label for="com_pass" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" name="com-password" id="com_pass">
                         </div>
                         <div class="d-flex mt-5">
                             <button type="submit" class="btn btn-secondary col-4">Update</button>

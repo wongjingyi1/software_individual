@@ -20,13 +20,13 @@
             <h1>Complaint Form</h1>
         </div><!-- End Page Title -->
         <section class="container section">
-            <div class="overflow-auto ">
+            <!-- <div class="overflow-auto ">
                 <div class="d-flex align-items-center justify-content-center border-bottom border-2 pb-2">
                     <div class="d-flex flex-column align-items-center justify-content-center text-center p-2">
                         <div class="border border-3 border-dark rounded-circle fs-3 d-flex align-items-center justify-content-center circle">1</div>
                         <div class="pt-1">Pending</div>
                     </div>
-                    <!-- https://freebiesupply.com/blog/css-arrows/ -->
+                     https://freebiesupply.com/blog/css-arrows/ 
                     <i class="fa-solid fa-arrow-right-long fa-3x pb-3 px-2"></i>
                     <div class="d-flex flex-column align-items-center justify-content-center text-center p-2">
                         <div class="border border-3 border-dark rounded-circle fs-3 d-flex align-items-center justify-content-center circle"><i class="fa-solid fa-check "></i></div>
@@ -43,8 +43,12 @@
                         <div class="pt-1">Closed</div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
+            <div class="row d-flex align-items-center my-3">
+                    <div class="col-4 py-2">Title</div>
+                    <div class="col-8 py-2 border border-3 rounded">Complaint Title</div>
+                </div>
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Detail</div>
                     <div class="col-8 py-2 border border-3 rounded">Detail word</div>

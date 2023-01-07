@@ -33,11 +33,11 @@
                         <select class="form-select" id="category" name="category">
                             <option value="-1">Default</option>
                             <option value="1">Classes</option>
-                            <option value="1">Bulding</option>
-                            <option value="1">Teachers</option>
-                            <option value="1">Grades</option>
-                            <option value="1">Communication</option>
-                            <option value="1">Lunch</option>
+                            <option value="2">Bulding</option>
+                            <option value="3">Teachers</option>
+                            <option value="4">Grades</option>
+                            <option value="5">Communication</option>
+                            <option value="6">Lunch</option>
                         </select>
                     </div>
 

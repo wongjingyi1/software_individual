@@ -44,26 +44,6 @@
                     </div>
                 </div>
             </div>
-            <?php //switch ($status) {
-                        // case "pending":
-                        //     echo "Pending";
-                        //     break;
-                        // case "keep_in_view":
-                        //     echo "Keep in View";
-                        //     break;
-                        // case "active":
-                        //     echo "Active";
-                        //     break;
-                        // default:
-                        //     echo "Closed";
-                   // } ?>
-<!-- ?php if ($status == "pending" || $status == "keep_in_view") {
-                                            echo "btn-waring";
-                                        } else if ($status == "active") {
-                                            echo "btn-success";
-                                        } else {
-                                            echo "btn-secondary";
-                                        } ?> -->
             <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Detail</div>
@@ -80,7 +60,25 @@
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Current Status:</div>
                     <div class="col-8 py-2 px-0">
-                        <div class="btn btn-success">pending</div>
+                        <div class="btn <?php if ($status == "pending" || $status == "keep_in_view") {
+                                            echo "btn-waring";
+                                        } else if ($status == "active") {
+                                            echo "btn-success";
+                                        } else {
+                                            echo "btn-secondary";
+                                        } ?>"><?php switch ($status) {
+                        case "pending":
+                            echo "Pending";
+                            break;
+                        case "keep_in_view":
+                            echo "Keep in View";
+                            break;
+                        case "active":
+                            echo "Active";
+                            break;
+                        default:
+                            echo "Closed";
+                    } ?></div>
                     </div>
                 </div>
                 <div class="row d-flex align-items-center my-3 border-bottom border-2 pb-3">

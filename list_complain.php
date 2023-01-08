@@ -55,7 +55,7 @@
                         <td>Executive</td>
                         <td>Status</td>
                         <td>Last Updated</td>
-                        <td><i class="fa-solid fa-eye "></i></td>
+                        <td class="d-flex justify-content-center align-items-center"><i class="fa-regular fa-pen-to-square"><i class="fa-solid fa-eye "></i></td>
                     </tr>
                 </table>
             </div>

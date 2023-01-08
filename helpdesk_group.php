@@ -19,6 +19,15 @@
         .box {
             width: 200px;
         }
+
+        .accordion .card-link .fa-chevron-down {
+            margin-right: 0;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .accordion .card-link:not(.collapsed) .fa-chevron-down {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 
@@ -32,18 +41,15 @@
         <section class="container section">
 
             <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                    <div class="card">
-                        <button class="card-header collapsed card-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" >
-                        <b class="header-title">The Grouping Title</b>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-plus float-right "></i>
-                            
-                        </button>
+                <div class="card">
+                    <a class="card-header collapsed card-link d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                        <b class="header-title">The Grouping Title</b><i class='fa-solid fa-chevron-down ms-auto float-end'></i>
+                    </a>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body p-0">
                             <div class="overflow-auto">
-                                <table class='table table-hover table-responsive table-bordered'>
+                                <table class='table table-hover table-responsive table-bordered mb-0'>
                                     <tr>
                                         <th>Title</th></a>
                                         <th>Executive</th>
@@ -61,8 +67,8 @@
                                 </table>
                             </div>
                         </div>
+
                     </div>
-                </div>
                 </div>
             </div>
 

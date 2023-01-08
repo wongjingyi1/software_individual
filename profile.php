@@ -59,7 +59,7 @@ include "reusable_components/user_session.php"
     }
 
     ?>
-    <?
+    <?php
     if ($_POST) {
         $uppercase = preg_match('@[A-Z]@', $_POST['new_pass']);
         $lowercase = preg_match('@[a-z]@', $_POST['new_pass']);
@@ -224,31 +224,31 @@ include "reusable_components/user_session.php"
             <h1>Profile</h1>
         </div><!-- End Page Title -->
         <section class="container section">
-            <from class="d-flex mt-5" action="<?php //echo $_SERVER["PHP_SELF"]; 
+            <from class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"]; 
                                                 ?>" method="POST" enctype="multipart/form-data">
                 <div class="col-3 text-center">
-                    <img src="<?php //echo $image 
+                    <img src="<?php echo $image 
                                 ?>" width="150px">
                     <label for="file-upload" class="btn btn-info mt-4 col-10">Custom Upload</label>
                     <input type="file" name="image" />
                     <div class="m-4 text-start">
                         <label for="formGroupExampleInput" class="form-label">Role</label>
-                        <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php //echo $role 
+                        <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php echo $role 
                                                                                                                 ?>" disabled>
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="<?php //echo $name ?>" disabled>
+                        <input type="text" class="form-control" id="name" placeholder="<?php echo $name ?>" disabled>
                     </div>
                 </div>
                 <div class="col-9 ms-5">
 
                     <div class="mb-3">
                         <label for="exampleInputUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="exampleInputusername" aria-describedby="username" name='username' value="<?php //echo htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : $username_, ENT_QUOTES);  
+                        <input type="text" class="form-control" id="exampleInputusername" aria-describedby="username" name='username' value="<?php echo htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : $username_, ENT_QUOTES);  
                                                                                                                                                 ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="exampleInputEmail" name='email' value="<?php //echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  
+                        <input type="text" class="form-control" id="exampleInputEmail" name='email' value="<?php echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  
                                                                                                             ?>">
                     </div>
                     <div class="mb-3">

@@ -2,7 +2,7 @@
     ob_start();
     session_start();
     if (isset($_SESSION['logged_in'])) {
-        header("location: student_dashboard.php");
+        header("location: dashboard.php");
     }
 ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
             include 'config/database.php';
 
             try {
-                $query = "SELECT * from student WHERE username = :username_";
+                $query = "SELECT * from users WHERE username = :username_";
                 $stmt = $con->prepare($query);
                 $stmt->bindParam(":username_", $username_);
                 $stmt->execute();
@@ -37,8 +37,8 @@
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($password_== $row['password']) {
                         $_SESSION['logged_in']=true;
-                        $_SESSION['user_id']=$row['id'];
-                        header("location: student_dashboard.php");
+                        $_SESSION['user_id']=$row['userID'];
+                        header("location: dashboard.php");
                     }  
                     else {
                         $message.="<div class='alert alert-danger' role='alert'>Incorrect password!</div>";

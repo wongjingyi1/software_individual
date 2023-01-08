@@ -91,8 +91,17 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block ps-2">Username</span>
+            <img src="<?php echo $image_ ?>" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block ps-2">
+              <?php 
+                if (isset($username_)) {
+                  echo $username_;
+                }
+                else {
+                  echo "tanzx";
+                }
+              ?>
+            </span>
           </a><!-- End Profile Iamge Icon -->
     </nav><!-- End Icons Navigation -->
 
@@ -127,110 +136,126 @@
           </li>
         </ul>
       </li><!-- End Forms Nav -->
+      
+      <?php 
+        if ($role=='helpdesk') {
+          echo "<li class='nav-heading<li class='nav-heading'>Helpdesk</li>
 
-      <li class="nav-heading">Helpdesk</li>
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' href='#'>
+                  <i class='fa-solid fa-box-archive'></i>    
+                    <span>Complaint Inbox</span>
+                    <span class='badge bg-success badge-number ms-auto'>3</span>
+                  </a>
+                </li><!-- End Login Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-        <i class="fa-solid fa-box-archive"></i>    
-          <span>Complaint Inbox</span>
-          <span class="badge bg-success badge-number ms-auto">3</span>
-        </a>
-      </li><!-- End Login Page Nav -->
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' data-bs-target='#helpdesk' data-bs-toggle='collapse' href='#'>
+                  <i class='fa-solid fa-inbox'></i><span>Manage Complaint</span><i class='fa-solid fa-chevron-down ms-auto'></i>
+                  </a>
+                  <ul id='helpdesk' class='nav-content collapse ' data-bs-parent='#sidebar-nav'>
+                    <li>
+                      <a href='#'>
+                        </i><span>Keep In View</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        </i><span>Active</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        </i><span>Closed</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li><!-- End Helpdesk Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#helpdesk" data-bs-toggle="collapse" href="#">
-         <i class="fa-solid fa-inbox"></i><span>Manage Complaint</span><i class="fa-solid fa-chevron-down ms-auto"></i>
-        </a>
-        <ul id="helpdesk" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              </i><span>Keep In View</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              </i><span>Active</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              </i><span>Closed</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Helpdesk Nav -->
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' data-bs-target='#group' data-bs-toggle='collapse' href='#'>
+                  <i class='fa-regular fa-folder'></i></i><span>Group</span><i class='fa-solid fa-chevron-down ms-auto'></i>
+                  </a>
+                  <ul id='group' class='nav-content collapse ' data-bs-parent='#sidebar-nav'>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Add New</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Group List</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>";
+                      
+        }
+      ?>
+      <!-- End Group Nav -->
+      <?php 
+        if ($role=='executive') {
+          echo "<li class='nav-heading'>Executive</li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#group" data-bs-toggle="collapse" href="#">
-        <i class="fa-regular fa-folder"></i></i><span>Group</span><i class="fa-solid fa-chevron-down ms-auto"></i>
-        </a>
-        <ul id="group" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Add New</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Group List</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Group Nav -->
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' href='#'>
+                  <i class='fa-solid fa-box-archive'></i> 
+                    <span>Complaint Inbox</span>
+                  </a>
+                </li><!-- End Login Page Nav -->
 
-      <li class="nav-heading">Executive</li>
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' data-bs-target='#executive' data-bs-toggle='collapse' href='#'>
+                  <i class='fa-solid fa-inbox'></i><span>Manage Complaint</span><i class='fa-solid fa-chevron-down ms-auto'></i>
+                  </a>
+                  <ul id='executive' class='nav-content collapse' data-bs-parent='#sidebar-nav'>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Keep In View</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Active</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Closed</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>";
+        }
+    
+      ?>
+      <!-- End executive Nav -->
+      
+      <?php 
+        if ($role=='admin') {
+          echo "<li class='nav-heading'>Admin</li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-        <i class="fa-solid fa-box-archive"></i> 
-          <span>Complaint Inbox</span>
-        </a>
-      </li><!-- End Login Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#executive" data-bs-toggle="collapse" href="#">
-        <i class="fa-solid fa-inbox"></i><span>Manage Complaint</span><i class="fa-solid fa-chevron-down ms-auto"></i>
-        </a>
-        <ul id="executive" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Keep In View</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Active</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Closed</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End executive Nav -->
-
-      <li class="nav-heading">Admin</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#admin" data-bs-toggle="collapse" href="#">
-        <i class="fa-solid fa-user-group"></i></i><span>Manage User</span><i class="fa-solid fa-chevron-down ms-auto"></i>
-        </a>
-        <ul id="admin" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Add New</span>
-              <!-- bi bi-person-plus-fill -->
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>User List</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End admin Nav -->
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' data-bs-target='#admin' data-bs-toggle='collapse' href='#'>
+                  <i class='fa-solid fa-user-group'></i></i><span>Manage User</span><i class='fa-solid fa-chevron-down ms-auto'></i>
+                  </a>
+                  <ul id='admin' class='nav-content collapse ' data-bs-parent='#sidebar-nav'>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Add New</span>
+                        <!-- bi bi-person-plus-fill -->
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>User List</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>";
+        }
+      ?>
+      <!-- End admin Nav -->
 
       <li class="nav-heading">Settings</li>
 
@@ -242,7 +267,7 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="logout.php">
         <i class="fa-solid fa-right-to-bracket"></i>
           <span>Log Out</span>
         </a>

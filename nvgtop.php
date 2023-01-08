@@ -139,7 +139,7 @@
       
       <?php 
         if ($role=='helpdesk') {
-          echo "<li class='nav-heading<li class='nav-heading'>Helpdesk</li>
+          echo "<li class='nav-heading'>Helpdesk</li>
 
                 <li class='nav-item'>
                   <a class='nav-link collapsed' href='#'>
@@ -196,7 +196,7 @@
       <?php 
         if ($role=='executive') {
           echo "<li class='nav-heading'>Executive</li>
-
+            
                 <li class='nav-item'>
                   <a class='nav-link collapsed' href='#'>
                   <i class='fa-solid fa-box-archive'></i> 
@@ -234,7 +234,55 @@
       <?php 
         if ($role=='admin') {
           echo "<li class='nav-heading'>Admin</li>
+                  <li class='nav-item'>
+                  <a class='nav-link collapsed' href='#'>
+                  <i class='fa-solid fa-box-archive'></i>    
+                    <span>Complaint Inbox</span>
+                    <span class='badge bg-success badge-number ms-auto'>3</span>
+                  </a>
+                </li><!-- End Login Page Nav -->
 
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' data-bs-target='#helpdesk' data-bs-toggle='collapse' href='#'>
+                  <i class='fa-solid fa-inbox'></i><span>Manage Complaint</span><i class='fa-solid fa-chevron-down ms-auto'></i>
+                  </a>
+                  <ul id='helpdesk' class='nav-content collapse ' data-bs-parent='#sidebar-nav'>
+                    <li>
+                      <a href='#'>
+                        </i><span>Keep In View</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        </i><span>Active</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        </i><span>Closed</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li><!-- End Helpdesk Nav -->
+
+                <li class='nav-item'>
+                  <a class='nav-link collapsed' data-bs-target='#group' data-bs-toggle='collapse' href='#'>
+                  <i class='fa-regular fa-folder'></i></i><span>Group</span><i class='fa-solid fa-chevron-down ms-auto'></i>
+                  </a>
+                  <ul id='group' class='nav-content collapse ' data-bs-parent='#sidebar-nav'>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Add New</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href='#'>
+                        <i class='bi bi-circle'></i><span>Group List</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+          
                 <li class='nav-item'>
                   <a class='nav-link collapsed' data-bs-target='#admin' data-bs-toggle='collapse' href='#'>
                   <i class='fa-solid fa-user-group'></i></i><span>Manage User</span><i class='fa-solid fa-chevron-down ms-auto'></i>

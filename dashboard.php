@@ -59,6 +59,70 @@ include "reusable_components/user_session.php"
                     </div>
                 </div>
             </div>
+            <?php 
+                if ($role=='helpdesk' || $role=='admin') {
+                    echo "<div class='text-decoration-underline py-4'>Complaint Management</div>
+                            <div class='d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row'>
+                                <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center py-3'>
+                                        <div>Pending</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                
+                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Keep In View</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                
+                                <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Active</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Closed</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Group</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                            </div>";
+                }
+                else if ($role=='executive') {
+                    echo "<div class='text-decoration-underline py-4'>Complaint Execution</div>
+                            <div class='d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row'>
+                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Keep In View</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                
+                                <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Active</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Closed</div>
+                                        <h3>3</h3>
+                                    </div>
+                                </div>
+                            </div>";
+                }
+            ?>
+            
             <div class="text-decoration-underline py-4">Latest Information</div>
             <div class="overflow-auto">
                 <table class='table table-hover table-responsive table-bordered'>
@@ -79,6 +143,7 @@ include "reusable_components/user_session.php"
                 </table>
             </div>
         </section>
+        
         </main>
 
         <script src="js/main.js"></script>

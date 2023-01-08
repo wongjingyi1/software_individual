@@ -7,7 +7,7 @@
     }
     else {
         include 'config/database.php';
-        $query = "SELECT username,image from student WHERE id = :id ";
+        $query = "SELECT usernamefrom users WHERE userID  = :id ";
         $stmt = $con->prepare($query);
         $stmt->bindParam(":id", $_SESSION['user_id']);
         $stmt->execute();

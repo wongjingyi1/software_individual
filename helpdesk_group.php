@@ -28,6 +28,8 @@
         .accordion .card-link:not(.collapsed) .fa-chevron-down {
             transform: rotate(180deg);
         }
+
+
     </style>
 </head>
 
@@ -43,7 +45,12 @@
             <div class="accordion" id="accordionExample">
                 <div class="card">
                     <a class="card-header collapsed card-link d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                        <b class="header-title">The Grouping Title</b><i class='fa-solid fa-chevron-down ms-auto float-end'></i>
+                        <b class="header-title">The Grouping Title</b>
+                        <div class=" ms-auto float-end">
+                            <i class="fa-regular fa-pen-to-square me-2"></i>
+                            <i class="fa-regular fa-trash-can me-2"></i>
+                            <i class='fa-solid fa-chevron-down me-2'></i>
+                        </div>
                     </a>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">

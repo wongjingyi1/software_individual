@@ -37,7 +37,8 @@
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($password_== $row['password']) {
                         $_SESSION['logged_in']=true;
-                        $_SESSION['user_id']=$row['id'];
+                        $_SESSION['user_id']=$row['userID'];
+
                         header("location: dashboard.php");
                     }  
                     else {

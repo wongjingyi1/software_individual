@@ -128,10 +128,6 @@ include "reusable_components/user_session.php"
                     $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";
                 }
 
-                if (((int)date_diff(date_create(date('Y-m-d')), date_create($_POST["date_of_birth"]))->format("%R%y")) >= -18) {
-                    $file_upload_error_messages .= "<div>You must be above 18 age old!</div>";
-                }
-
                 if (!empty($_FILES["image"]["name"])) {
                     if ($image && $image != "NULL") {
                         // upload to file to folder
@@ -222,13 +218,20 @@ include "reusable_components/user_session.php"
         }
     }
     ?>
-            <from class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"]; 
+            <form class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"]; 
                                                 ?>" method="POST" enctype="multipart/form-data">
                 <div class="col-3 text-center">
-                    <img src="<?php echo $image 
+                    <img src="<?php  
+                    
+                    if ($image!='NULL') {
+                        echo $image;
+                    } 
+                    else {
+                        echo $image_;
+                    }
                                 ?>" width="150px">
                     <label for="file-upload" class="btn btn-info mt-4 col-10">Custom Upload</label>
-                    <input type="file" name="image" />
+                    <input id="file-upload" type="file" name="image" />
                     <div class="m-4 text-start">
                         <label for="formGroupExampleInput" class="form-label">Role</label>
                         <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php echo $role 
@@ -268,7 +271,7 @@ include "reusable_components/user_session.php"
 
                 </div>
                 </div>
-            </from>
+            </form>
         </section>
     </main>
 

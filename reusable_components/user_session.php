@@ -15,6 +15,6 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $username_=$row['username'];
         $role=$row['role'];
-        $image_=$row['profile']!=NULL ? $row['profile'] : "images/no_people_img.png" ;
+        $image_=$row['profile']!=NULL ? $row['profile'] : "images/profile_pic.png" ;
     }
 ?>

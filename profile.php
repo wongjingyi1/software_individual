@@ -222,6 +222,16 @@ include "reusable_components/user_session.php"
         }
     }
     ?>
+<<<<<<< HEAD
+=======
+    <?php include "nvgtop.php" ?>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Profile</h1>
+        </div><!-- End Page Title -->
+        <section class="container section">
+>>>>>>> aa91667dd0aeb65a747ce6bb800b4b07540a7ac3
             <from class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"]; 
                                                 ?>" method="POST" enctype="multipart/form-data">
                 <div class="col-3 text-center">

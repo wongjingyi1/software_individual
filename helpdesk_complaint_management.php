@@ -106,6 +106,25 @@
                     </tr>
                 </table>
             </div>
+            <?php if ($status == "pending" || $status == "keep_in_view") {
+                                                echo "btn-waring";
+                                            } else if ($status == "active") {
+                                                echo "btn-success";
+                                            } else {
+                                                echo "btn-secondary";
+                                            } ?>"><?php switch ($status) {
+                                                        case "pending":
+                                                            echo "Pending";
+                                                            break;
+                                                        case "keep_in_view":
+                                                            echo "Keep in View";
+                                                            break;
+                                                        case "active":
+                                                            echo "Active";
+                                                            break;
+                                                        default:
+                                                            echo "Closed";
+                                                    } ?></div>
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

@@ -8,13 +8,15 @@
     else {
         include 'config/database.php';
 
-        $query = "SELECT username,role,profile from users WHERE userID = :id ";
+        $query = "SELECT * from users WHERE userID = :id ";
         $stmt = $con->prepare($query);
         $stmt->bindParam(":id", $_SESSION['user_id']);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $username_=$row['username'];
         $role=$row['role'];
+        $helpdesk=$row['helpdesk'];
+        $department_ID=$row['departmentID'];
         $image_=$row['profile']!=NULL ? $row['profile'] : "images/profile_pic.png" ;
     }
 ?>

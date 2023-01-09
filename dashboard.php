@@ -29,64 +29,180 @@ include "reusable_components/user_session.php"
         <div class="pagetitle">
             <h1>Dashboard</h1>
         </div><!-- End Page Title -->
+        <?php 
+            $pending_status=0;
+            $kiv_status=0;
+            $active_status=0;
+            $closed_status=0;
+            
+            include 'config/database.php';
+            try {
+                $query = "SELECT status from complaint WHERE userID = :userID";
+                $stmt = $con->prepare($query);
+                $stmt->bindParam(":userID", $_SESSION['user_id']);
+                $stmt->execute();
+                $num = $stmt->rowCount();
+
+                if ($num > 0) {
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+                        if ($status=="pending") {
+                            $pending_status+=1;
+                        }
+                        else if ($status=='kiv') {
+                            $kiv_status+=1;
+                        }
+                        else if ($status=='active') {
+                            $active_status+=1;
+                        }
+                        else if ($status=='closed') {
+                            $closed_status+=1;
+                        }
+                    }
+                }
+                
+            }
+            // show error
+            catch (PDOException $exception) {
+                die('ERROR: ' . $exception->getMessage());
+            }
+            
+            if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
+                $overall_pending_status=0;
+                $overall_kiv_status=0;
+                $overall_active_status=0;
+                $overall_closed_status=0;
+            
+                include 'config/database.php';
+                try {
+                    $query = "SELECT status from complaint";
+                    $stmt = $con->prepare($query);
+                    $stmt->execute();
+                    $num = $stmt->rowCount();
+
+                    if ($num > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            extract($row);
+                            if ($status=="pending") {
+                                $overall_pending_status+=1;
+                            }
+                            else if ($status=='kiv') {
+                                $overall_kiv_status+=1;
+                            }
+                            else if ($status=='active') {
+                                $overall_active_status+=1;
+                            }
+                            else if ($status=='closed') {
+                                $overall_closed_status+=1;
+                            }
+                        }
+                    }
+                    
+                }
+                // show error
+                catch (PDOException $exception) {
+                    die('ERROR: ' . $exception->getMessage());
+                }
+            }
+
+            if ($role=='executive') {
+                $executive_pending_status=0;
+                $executive_kiv_status=0;
+                $executive_active_status=0;
+                $executive_closed_status=0;
+            
+                include 'config/database.php';
+                try {
+                    $query = "SELECT status from complaint WHERE departmentID=:departmentID";
+                    $stmt = $con->prepare($query);
+                    $stmt->bindParam(":departmentID",$department_ID);
+                    $stmt->execute();
+                    $num = $stmt->rowCount();
+
+                    if ($num > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            extract($row);
+                            if ($status=="pending") {
+                                $executive_pending_status+=1;
+                            }
+                            else if ($status=='kiv') {
+                                $executive_kiv_status+=1;
+                            }
+                            else if ($status=='active') {
+                                $executive_active_status+=1;
+                            }
+                            else if ($status=='closed') {
+                                $executive_closed_status+=1;
+                            }
+                        }
+                    }
+                    
+                }
+                // show error
+                catch (PDOException $exception) {
+                    die('ERROR: ' . $exception->getMessage());
+                }
+            }
+        
+        ?>
         <section class="container section">
             <div class="text-decoration-underline py-4">Overview</div>
             <div class="d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row">
                 <div class="card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center">
                     <div class="text-white text-center py-3">
                         <div>Pending</div>
-                        <h3>3</h3>
+                        <h3><?php echo $pending_status ?></h3>
                     </div>
                 </div>
 
                 <div class="card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center">
                     <div class="text-white text-center">
                         <div>Keep In View</div>
-                        <h3>3</h3>
+                        <h3><?php echo $kiv_status ?></h3>
                     </div>
                 </div>
 
                 <div class="card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center">
                     <div class="text-white text-center">
                         <div>Active</div>
-                        <h3>3</h3>
+                        <h3><?php echo $active_status ?></h3>
                     </div>
                 </div>
                 <div class="card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center">
                     <div class="text-white text-center">
                         <div>Closed</div>
-                        <h3>3</h3>
+                        <h3><?php echo $closed_status ?></h3>
                     </div>
                 </div>
             </div>
             <?php 
-                if ($role=='helpdesk' || $role=='admin') {
+                if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
                     echo "<div class='text-decoration-underline py-4'>Complaint Management</div>
                             <div class='d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row'>
                                 <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center py-3'>
                                         <div>Pending</div>
-                                        <h3>3</h3>
+                                        <h3>$overall_pending_status</h3>
                                     </div>
                                 </div>
                 
                                 <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Keep In View</div>
-                                        <h3>3</h3>
+                                        <h3>$overall_kiv_status</h3>
                                     </div>
                                 </div>
                 
                                 <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Active</div>
-                                        <h3>3</h3>
+                                        <h3>$overall_active_status</h3>
                                     </div>
                                 </div>
                                 <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Closed</div>
-                                        <h3>3</h3>
+                                        <h3>$overall_closed_status</h3>
                                     </div>
                                 </div>
                                 <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
@@ -100,23 +216,29 @@ include "reusable_components/user_session.php"
                 else if ($role=='executive') {
                     echo "<div class='text-decoration-underline py-4'>Complaint Execution</div>
                             <div class='d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row'>
+                                <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                    <div class='text-white text-center'>
+                                        <div>Pending</div>
+                                        <h3>$executive_pending_status</h3>
+                                    </div>
+                                </div>
                                 <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Keep In View</div>
-                                        <h3>3</h3>
+                                        <h3>$executive_kiv_status</h3>
                                     </div>
                                 </div>
                 
                                 <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Active</div>
-                                        <h3>3</h3>
+                                        <h3>$executive_active_status</h3>
                                     </div>
                                 </div>
                                 <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Closed</div>
-                                        <h3>3</h3>
+                                        <h3>$executive_closed_status</h3>
                                     </div>
                                 </div>
                             </div>";
@@ -133,13 +255,100 @@ include "reusable_components/user_session.php"
                         <th>Last Updated</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
-                        <td>Title</td>
-                        <td>Executive</td>
-                        <td>Status</td>
-                        <td>Last Updated</td>
-                        <td><i class="fa-solid fa-eye fa-2x"></i></td>
-                    </tr>
+                    <?php
+                        if ($role=='student') {
+                            include 'config/database.php';
+
+                            try {
+                                $query = "SELECT * from complaint WHERE userID = :userID";
+                                $stmt = $con->prepare($query);
+                                $stmt->bindParam(":userID", $_SESSION['user_id']);
+                                $stmt->execute();
+                                $num = $stmt->rowCount();
+
+                                if ($num > 0) {
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($row);
+                                        echo "<tr>
+                                                <td>$title</td>
+                                                <td>$departmentID</td>
+                                                <td>$status</td>
+                                                <td>$modifydate</td>
+                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                            </tr>";
+                                    }
+                                }
+                                
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
+                            
+                        }
+                        if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
+                            include 'config/database.php';
+
+                            try {
+                                $query = "SELECT * from complaint";
+                                $stmt = $con->prepare($query);
+                                $stmt->execute();
+                                $num = $stmt->rowCount();
+
+                                if ($num > 0) {
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($row);
+                                        echo "<tr>
+                                                <td>$title</td>
+                                                <td>$departmentID</td>
+                                                <td>$status</td>
+                                                <td>$modifydate</td>
+                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                            </tr>";
+                                    }
+                                }
+                                
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
+                        }
+
+                        if ($role=='executive') {
+                        
+                            include 'config/database.php';
+                            try {
+                                $query = "SELECT * from complaint WHERE departmentID=:departmentID";
+                                $stmt = $con->prepare($query);
+                                $stmt->bindParam(":departmentID",$department_ID);
+                                $stmt->execute();
+                                $num = $stmt->rowCount();
+            
+                                if ($num > 0) {
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($row);
+                                        echo "<tr>
+                                                <td>$title</td>
+                                                <td>$departmentID</td>
+                                                <td>$status</td>
+                                                <td>$modifydate</td>
+                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                            </tr>";
+                                    }
+                                }
+                                
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
+                        }
+                        
+                    
+                    
+                    ?>
+                    
                 </table>
             </div>
         </section>

@@ -1,3 +1,6 @@
+<?php
+include "reusable_components/user_session.php"
+?>
 <!DOCTYPE HTML>
 <html>
 

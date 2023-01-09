@@ -1,3 +1,6 @@
+<?php
+include "reusable_components/user_session.php"
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -32,7 +35,7 @@
         <section class="container section">
             <div class="d-flex py-4 justify-content-center align-items-center text-center px-sm-5 px-0">
                 <label for="list_complain" class="form-label text-end m-0 pe-2">Sent:</label>
-                    <select class="form-select" id="list_complain" name="list_complain">
+                    <select class="form-select" id="list_complain" name="list_complain" onchange="filter(this)">
                         <option value="all">All</option>
                         <option value="pending">Pending</option>
                         <option value="keep_in_view">Keep in View</option>
@@ -50,13 +53,67 @@
                         <th>Last Updated</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
-                        <td>Title</td>
-                        <td>Executive</td>
-                        <td>Status</td>
-                        <td>Last Updated</td>
-                        <td class="d-flex justify-content-center align-items-center"><i class="fa-regular fa-pen-to-square"><i class="fa-solid fa-eye "></i></td>
-                    </tr>
+                    <?php 
+                        if ($role=='student') {
+                            include 'config/database.php';
+
+                            try {
+                                $query = "SELECT * from complaint WHERE userID = :userID";
+                                $stmt = $con->prepare($query);
+                                $stmt->bindParam(":userID", $_SESSION['user_id']);
+                                $stmt->execute();
+                                $num = $stmt->rowCount();
+
+                                if ($num > 0) {
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($row);
+                                        echo "<tr class='complain'>
+                                                <td>$title</td>
+                                                <td>$departmentID</td>
+                                                <td class='status'>$status</td>
+                                                <td>$modifydate</td>
+                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                            </tr>";
+                                    }
+                                }
+                                
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
+                            
+                        }
+                        if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
+                            include 'config/database.php';
+
+                            try {
+                                $query = "SELECT * from complaint";
+                                $stmt = $con->prepare($query);
+                                $stmt->execute();
+                                $num = $stmt->rowCount();
+
+                                if ($num > 0) {
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($row);
+                                        echo "<tr class='complain'>
+                                                <td>$title</td>
+                                                <td>$departmentID</td>
+                                                <td class='status'>$status</td>
+                                                <td>$modifydate</td>
+                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                            </tr>";
+                                    }
+                                }
+                                
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
+                        }
+                    
+                    ?>
                 </table>
             </div>
         </section>
@@ -64,6 +121,61 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     <script src="js/main.js"></script>
+    <script>
+        function filter(fil_ter) {
+            var complain_length=document.getElementsByClassName("complain").length;
+            
+            if (fil_ter.value=='pending') {
+                for (var i=0 ; i<complain_length ; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML=="pending")) {
+                        document.getElementsByClassName("complain")[i].style.display = "none";
+                    }
+                    else {
+                        document.getElementsByClassName("complain")[i].style.display = "";
+                    }
+                }
+            }
+            if (fil_ter.value=='keep_in_view') {
+                for (var i=0 ; i<complain_length ; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML=="kiv")) {
+                        document.getElementsByClassName("complain")[i].style.display = "none";
+                    }
+                    else {
+                        document.getElementsByClassName("complain")[i].style.display = "";
+                    }
+                }
+            }
+            if (fil_ter.value=='active') {
+                for (var i=0 ; i<complain_length ; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML=="active")) {
+                        document.getElementsByClassName("complain")[i].style.display = "none";
+                    }
+                    else {
+                        document.getElementsByClassName("complain")[i].style.display = "";
+                    }
+                }
+            }
+            if (fil_ter.value=='closed') {
+                for (var i=0 ; i<complain_length ; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML=="closed")) {
+                        document.getElementsByClassName("complain")[i].style.display = "none";
+                    }
+                    else {
+                        document.getElementsByClassName("complain")[i].style.display = "";
+                    }
+                }
+            }
+            if (fil_ter.value=='all') {
+                for (var i=0 ; i<complain_length ; i++) {
+                    document.getElementsByClassName("complain")[i].style.display = "";
+                }
+            }
+            
+
+
+        }
+
+    </script>
 </body>
 
 </html>

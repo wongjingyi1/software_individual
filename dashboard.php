@@ -260,7 +260,7 @@ include "reusable_components/user_session.php"
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint WHERE userID = :userID";
+                                $query = "SELECT * from complaint inner join department on complaint.departmentID=department.department_ID WHERE userID = :userID";
                                 $stmt = $con->prepare($query);
                                 $stmt->bindParam(":userID", $_SESSION['user_id']);
                                 $stmt->execute();
@@ -271,7 +271,7 @@ include "reusable_components/user_session.php"
                                         extract($row);
                                         echo "<tr>
                                                 <td>$title</td>
-                                                <td>$departmentID</td>
+                                                <td>$department_name</td>
                                                 <td>$status</td>
                                                 <td>$modifydate</td>
                                                 <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
@@ -290,7 +290,7 @@ include "reusable_components/user_session.php"
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint";
+                                $query = "SELECT * from complaint inner join department on complaint.departmentID=department.department_ID";
                                 $stmt = $con->prepare($query);
                                 $stmt->execute();
                                 $num = $stmt->rowCount();
@@ -300,7 +300,7 @@ include "reusable_components/user_session.php"
                                         extract($row);
                                         echo "<tr>
                                                 <td>$title</td>
-                                                <td>$departmentID</td>
+                                                <td>$department_name</td>
                                                 <td>$status</td>
                                                 <td>$modifydate</td>
                                                 <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
@@ -319,7 +319,7 @@ include "reusable_components/user_session.php"
                         
                             include 'config/database.php';
                             try {
-                                $query = "SELECT * from complaint WHERE departmentID=:departmentID";
+                                $query = "SELECT * from complaint inner join department on complaint.departmentID=department.department_ID WHERE complaint.departmentID=:departmentID";
                                 $stmt = $con->prepare($query);
                                 $stmt->bindParam(":departmentID",$department_ID);
                                 $stmt->execute();
@@ -330,7 +330,7 @@ include "reusable_components/user_session.php"
                                         extract($row);
                                         echo "<tr>
                                                 <td>$title</td>
-                                                <td>$departmentID</td>
+                                                <td>$department_name</td>
                                                 <td>$status</td>
                                                 <td>$modifydate</td>
                                                 <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>

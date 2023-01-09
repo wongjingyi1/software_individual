@@ -53,7 +53,7 @@ include "reusable_components/user_session.php"
         $name = $row_user['name'];
         $oldpassword = $row_user['password'];
         $email_ = $row_user['email'];
-        $image = $row_user['profile'] == NULL ? "images/profile_pic.png" : "images/" . $row_user['profile'];
+        $image = $row_user['image'] == NULL ? "images/profile_pic.png" : "images/" . $row_user['image'];
         $role = $row_user['role'];
         $helpdesk = $row_user['helpdesk'];
     }

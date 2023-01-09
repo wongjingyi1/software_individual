@@ -17,6 +17,6 @@
         $role=$row['role'];
         $helpdesk=$row['helpdesk'];
         $department_ID=$row['departmentID'];
-        $image_=$row['profile']!=NULL ? $row['profile'] : "images/profile_pic.png" ;
+        $image_=$row['image']!=NULL ? $row['image'] : "images/profile_pic.png" ;
     }
 ?>

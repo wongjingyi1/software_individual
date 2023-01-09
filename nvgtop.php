@@ -2,7 +2,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="dashboard.php" class="logo d-flex align-items-center">
         <img src="img/logo.png" alt="">
         <span class="d-none d-lg-block">e-Complaint</span>
       </a>
@@ -113,7 +113,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
+        <a class="nav-link collapsed" href="dashboard.php">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -130,7 +130,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="list_complain.php">
               <span>Sent</span>
             </a>
           </li>

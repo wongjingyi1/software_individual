@@ -1,3 +1,6 @@
+<?php
+include "reusable_components/user_session.php"
+?>
 <!DOCTYPE HTML>
 <html>
 
@@ -41,43 +44,85 @@
             <h1>Group List</h1>
         </div><!-- End Page Title -->
         <section class="container section">
+                        <?php 
+                            include 'config/database.php';
 
-            <div class="accordion" id="accordionExample">
-                <div class="card">
-                    <a class="card-header collapsed card-link d-flex align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                        <b class="header-title">The Grouping Title</b>
-                        <div class=" ms-auto float-end">
-                            <i class="fa-regular fa-pen-to-square me-2"></i>
-                            <i class="fa-regular fa-trash-can me-2"></i>
-                            <i class='fa-solid fa-chevron-down me-2'></i>
-                        </div>
-                    </a>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body p-0">
-                            <div class="overflow-auto">
-                                <table class='table table-hover table-responsive table-bordered mb-0'>
-                                    <tr>
-                                        <th>Title</th></a>
-                                        <th>Executive</th>
-                                        <th>Status</th>
-                                        <th>Last Updated</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Title</td>
-                                        <td>Executive</td>
-                                        <td>Status</td>
-                                        <td>Last Updated</td>
-                                        <td><i class="fa-solid fa-eye "></i></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+                            try {
+                                $query = "SELECT * from complaint WHERE group_name IS NOT NULL GROUP BY complaint.group_name";
+                                $stmt = $con->prepare($query);
+                                $stmt->execute();
+                                $num = $stmt->rowCount();
+                                if ($num > 0) {
 
-                    </div>
-                </div>
-            </div>
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($row);
+                                        echo "<div class='accordion' id='accordion$complaintID'>
+                                                <div class='card'>
+                                                    <a class='card-header collapsed card-link d-flex align-items-center' data-bs-toggle='collapse' data-bs-target='#collapse$complaintID'>";
+                                                        echo "<b class='header-title'>$group_name</b>
+                                                        <div class=' ms-auto float-end'>
+                                                            <i class='fa-solid fa-chevron-down me-2'></i>
+                                                        </div>                                                    
+                                                    </a>
+                                                    <div class=' ms-auto float-end'>
+                                                                    <i class='fa-regular fa-pen-to-square me-2'></i>
+                                                                    <a type='button' onclick='del_group(\"$group_name\")'><i class='fa-regular fa-trash-can me-2'></i></a>             
+                                                    </div>
+                                                    ";
+
+                                                    echo "<div id='collapse$complaintID' class='accordion-collapse collapse' aria-labelledby='headingOne' data-bs-parent='#accordion$complaintID'>
+                                                    <div class='accordion-body p-0'>
+                                                        <div class='overflow-auto'>
+                                                            <table class='table table-hover table-responsive table-bordered mb-0'>
+                                                                <tr>
+                                                                    <th>Title</th>
+                                                                    <th>Executive</th>
+                                                                    <th>Status</th>
+                                                                    <th>Last Updated</th>
+                                                                    <th>Action</th>
+                                                                </tr>";
+
+                                    $query1 = "SELECT * from complaint WHERE group_name=:groupname";
+                                    $stmt1 = $con->prepare($query1);
+                                    $stmt1->bindParam(":groupname", $group_name);
+                                    $stmt1->execute();
+                                    $num1 = $stmt1->rowCount();
+                                    if ($num1 > 0) {
+                                        while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+                                            $title=$row1['title'];
+                                            $status=$row1['status'];
+                                            $date=$row1['modifydate'];
+                                            $complaint_id=$row1['complaintID'];
+                                                            echo "
+                                                                <tr>
+                                                                    <td>$title</td>
+                                                                    <td>Executive</td>
+                                                                    <td>$status</td>
+                                                                    <td>$date</td>
+                                                                    <td><a href='complain_detail.php?complaintID=$complaint_id'><i class='fa-solid fa-eye '></i></a></td>
+                                                                </tr>";
+                                        }
+                                    }
+                                        echo "              </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>";
+
+                                                    
+                                        echo        
+                                                "</div>
+                                             </div>";
+                                    } 
+                                }                               
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
+        
+                        ?>
+                        
+                    
 
         </section>
     </main>
@@ -85,9 +130,15 @@
 
     <script src="js/main.js"></script>
     <script>
-        $('.card-btn').click(function() {
-            $(this).find('i').toggleClass('fas fa-plus fas fa-minus')
-        });
+        // $('.card-btn').click(function() {
+        //     $(this).find('i').toggleClass('fas fa-plus fas fa-minus')
+        // });
+
+        function del_group(group_name) {
+            if (confirm("Delete a group ?") == true) {
+                window.location.href = "remove_group.php?groupname="+group_name; 
+            }
+        }
     </script>
 </body>
 

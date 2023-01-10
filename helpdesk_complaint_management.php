@@ -84,7 +84,7 @@ include "reusable_components/user_session.php"
                                 </div>
                                 <div class="modal-body d-flex justify-content-center">
                                 <form method="POST" >
-                                    <input placeholder="Enter title group name my-3" type='text' class="text-center fw-bold" name='group_name'>
+                                    <input placeholder="Enter title group name" type='text' class="text-center fw-bold my-3" name='group_name'>
                                     <div class="d-flex justify-content-center align-items-center my-3">
                                         <div class='form1'>
                                             <div class='element'></div>                             
@@ -147,7 +147,7 @@ include "reusable_components/user_session.php"
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint WHERE departmentID IS NULL";
+                                $query = "SELECT * from complaint WHERE departmentID IS NULL OR group_name IS NULL";
                                 $stmt = $con->prepare($query);
                                 $stmt->execute();
                                 $num = $stmt->rowCount();
@@ -176,6 +176,29 @@ include "reusable_components/user_session.php"
                     ?>
                 </table>
             </div>
+            <?php 
+                if ($_POST) {
+                    $groupname=$_POST['group_name'];
+                    for ($i=0 ; $i<sizeof($_POST['group_input']) ; $i++) {
+                        $id=explode("-",$_POST['group_input'][$i]);
+
+                        include 'config/database.php';
+                        try {
+                            $query = "UPDATE complaint SET group_name=:group_name WHERE complaintID = :complaintID";
+                            $stmt = $con->prepare($query);
+                            $stmt->bindParam(":complaintID", $id[0]);
+                            $stmt->bindParam(":group_name", $groupname);
+                            $stmt->execute();
+                            
+                        }
+                        // show error
+                        catch (PDOException $exception) {
+                            die('ERROR: ' . $exception->getMessage());
+                        }
+                    }
+                }
+            
+            ?>
             <?php 
                 // if ($status == "pending" || $status == "keep_in_view") {
                 //     echo "btn-waring";
@@ -234,7 +257,7 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field'><input input type='text' name='field_input' value="
+                    "<div class='d-flex field'><input input type='text' name='group_input[]' value="
                         +$(this).val()+" readonly><div class='drop_item'><i class='fa-solid fa-xmark'></i></div></div>" 
                 
                 

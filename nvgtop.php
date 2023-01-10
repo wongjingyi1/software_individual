@@ -183,7 +183,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href='#'>
+                      <a href='helpdesk_group.php'>
                         <i class='bi bi-circle'></i><span>Group List</span>
                       </a>
                     </li>

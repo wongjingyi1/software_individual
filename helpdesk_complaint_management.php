@@ -25,6 +25,32 @@ include "reusable_components/user_session.php"
             width: 200px;
         }
     </style>
+    <script>
+        $(document).on('click','.close_btn', function () {
+            $(".radio_checkbox").prop('checked', false)
+            $(".field").remove();
+        });
+
+        $(document).on('click','.field', function () {
+            if ($(".field").length>1) {
+                $(this).remove()
+            }
+            
+        });
+        $(document).on('click','.close_btn', function () {
+            $(".radio_checkbox").prop('checked', false)
+            $(".field1").remove();
+        });
+
+        $(document).on('click','.field1', function () {
+            if ($(".field1").length>1) {
+                $(this).remove()
+            }
+            
+        });
+
+
+    </script>
 </head>
 
 <body>
@@ -54,38 +80,52 @@ include "reusable_components/user_session.php"
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="modal_create_group">Modal title</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clear()"></button>
+                                    <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close" ></button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="text-center fw-bold">Enter title group name</div>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <form method="POST" id='form'>
-                                            <div id='element'></div>
-                                        <form>
-                                        
+                                <div class="modal-body d-flex justify-content-center">
+                                <form method="POST" >
+                                    <input placeholder="Enter title group name my-3" type='text' class="text-center fw-bold" name='group_name'>
+                                    <div class="d-flex justify-content-center align-items-center my-3">
+                                        <div class='form1'>
+                                            <div class='element'></div>                             
+                                        </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clear()">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-secondary close_btn" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                <form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-secondary me-2" type="button" data-bs-target="#add_group" data-bs-toggle="modal">Add to ...</button>
+                    <button class="btn btn-secondary me-2" type="button" data-bs-target="#add_group" data-bs-toggle="modal" onclick='pass_data1()'>Add to ...</button>
                     <div class="modal fade" id="add_group" tabindex="-1" aria-labelledby="modal_add_group" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="modal_add_group">Modal title</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
+                                <form>
+                                    <select name="assign_to">
+                                        <option value="not_relevant">Not Relevant</option>
+                                        <option value="fict">FICT</option>
+                                        <option value="registration">Registration</option>
+                                        <option value="fame">FAME</option>
+                                        <option value="library">Library</option>
+                                    </select>
+                                    <div class="d-flex justify-content-center align-items-center my-3">
+                                            <div class='form1'>
+                                                <div class='element1'></div>                             
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary close_btn" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -194,22 +234,28 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex'>"+
-                        $(this).val()+
-                        "<div onclick='drop_item()' class='drop_item'><i class='fa-solid fa-xmark'></i></div>"+
-                    "</div>" 
+                    "<div class='d-flex field'><input input type='text' name='field_input' value="
+                        +$(this).val()+" readonly><div class='drop_item'><i class='fa-solid fa-xmark'></i></div></div>" 
                 
                 
-                ).insertAfter( "#element" );
+                ).insertAfter( ".element" );
             })
 
             
         }
+        function pass_data1() {
 
-        function clear() {
-            $(":checked").attr('checked', false)
-            $("#form").empty();
+            $(".radio_checkbox:checked").each(function(val){
+                $( 
+                    "<div class='d-flex field1'><input input type='text' name='field_input' value="
+                        +$(this).val()+" readonly><div class='drop_item'><i class='fa-solid fa-xmark'></i></div></div>" 
+                
+                
+                ).insertAfter( ".element1" );
+            })
         }
+
+        
 
         function filter(fil_ter) {
             var complain_length=document.getElementsByClassName("complain").length;

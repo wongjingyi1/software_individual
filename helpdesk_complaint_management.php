@@ -82,9 +82,9 @@ include "reusable_components/user_session.php"
                                     <h1 class="modal-title fs-5" id="modal_create_group">Create New Group</h1>
                                     <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close" ></button>
                                 </div>
-                                <div class="d-flex justify-content-center" style="padding-bottom:1rem;">
+                                <div class="d-flex justify-content-center" style="padding-bottom:1rem">
                                 <form method="POST" >
-                                    <input placeholder="Enter group title name" type='text' class="text-center fw-bold my-3" name='group_name'>
+                                    <input placeholder="Enter title group name" type='text' class="text-center fw-bold my-3" name='group_name'>
                                     <div class="d-flex justify-content-center align-items-center my-3">
                                         <div class='form1'>
                                             <div class='element'></div>                             
@@ -108,7 +108,7 @@ include "reusable_components/user_session.php"
                                 </div>
                                 <div class="modal-body">
                                 <form>
-                                    <select class="d-flex justify-content-center" name="assign_to">
+                                    <select name="assign_to">
                                         <option value="not_relevant">Not Relevant</option>
                                         <option value="fict">FICT</option>
                                         <option value="registration">Registration</option>
@@ -136,6 +136,7 @@ include "reusable_components/user_session.php"
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr class="text-center">
                         <th></th>
+                        <th>No</th>
                         <th>Title</th></a>
                         <th>Executive</th>
                         <th>Status</th>
@@ -157,6 +158,7 @@ include "reusable_components/user_session.php"
                                         extract($row);
                                         echo "<tr class='complain'>
                                                 <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$title'></td>
+                                                <td class='text-center'>$complaintID</td>
                                                 <td>$title</td>
                                                 <td>Executive</td>
                                                 <td class='status'>$status</td>
@@ -227,9 +229,7 @@ include "reusable_components/user_session.php"
             ?>
         </section>
     </main>
-
     <?php include "footer.php" ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     <script src="js/main.js"></script>
@@ -243,7 +243,7 @@ include "reusable_components/user_session.php"
                     var table = document.querySelectorAll('.pRow');
                     var rowCount = table.length;
 
-                    // if the table row is larger than 1
+                    // if the table row is lager than 1
                     if (rowCount > 1) {
                         // get the row tag (tr)
                         var table_row = ev.target.parentElement.parentElement;
@@ -260,7 +260,7 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:10px'></i></div><input input type='text' name='group_input[]' value="
+                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px; margin-bottom:-2px'></i></div><input input type='text' name='group_input[]' value="
                         +$(this).val()+" readonly></div>" 
                 
                 
@@ -273,7 +273,7 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:10px'></i></div><input input type='text' name='field_input' value="
+                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px'></i></div><input input type='text' name='field_input' value="
                         +$(this).val()+" readonly></div>" 
                 
                 

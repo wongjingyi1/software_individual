@@ -79,12 +79,12 @@ include "reusable_components/user_session.php"
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modal_create_group">Modal title</h1>
+                                    <h1 class="modal-title fs-5" id="modal_create_group">Create New Group</h1>
                                     <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close" ></button>
                                 </div>
-                                <div class="modal-body d-flex justify-content-center">
+                                <div class="d-flex justify-content-center" style="padding-bottom:1rem;">
                                 <form method="POST" >
-                                    <input placeholder="Enter title group name" type='text' class="text-center fw-bold my-3" name='group_name'>
+                                    <input placeholder="Enter group title name" type='text' class="text-center fw-bold my-3" name='group_name'>
                                     <div class="d-flex justify-content-center align-items-center my-3">
                                         <div class='form1'>
                                             <div class='element'></div>                             
@@ -103,12 +103,12 @@ include "reusable_components/user_session.php"
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modal_add_group">Modal title</h1>
+                                    <h1 class="modal-title fs-5" id="modal_add_group">Add to ...</h1>
                                     <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                 <form>
-                                    <select name="assign_to">
+                                    <select class="d-flex justify-content-center" name="assign_to">
                                         <option value="not_relevant">Not Relevant</option>
                                         <option value="fict">FICT</option>
                                         <option value="registration">Registration</option>
@@ -156,7 +156,7 @@ include "reusable_components/user_session.php"
                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         extract($row);
                                         echo "<tr class='complain'>
-                                                <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$complaintID-$title'></td>
+                                                <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$title'></td>
                                                 <td>$title</td>
                                                 <td>Executive</td>
                                                 <td class='status'>$status</td>
@@ -243,7 +243,7 @@ include "reusable_components/user_session.php"
                     var table = document.querySelectorAll('.pRow');
                     var rowCount = table.length;
 
-                    // if the table row is lager than 1
+                    // if the table row is larger than 1
                     if (rowCount > 1) {
                         // get the row tag (tr)
                         var table_row = ev.target.parentElement.parentElement;
@@ -260,8 +260,8 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field'><input input type='text' name='group_input[]' value="
-                        +$(this).val()+" readonly><div class='drop_item'><i class='fa-solid fa-xmark'></i></div></div>" 
+                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:10px'></i></div><input input type='text' name='group_input[]' value="
+                        +$(this).val()+" readonly></div>" 
                 
                 
                 ).insertAfter( ".element" );
@@ -273,8 +273,8 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field1'><input input type='text' name='field_input' value="
-                        +$(this).val()+" readonly><div class='drop_item'><i class='fa-solid fa-xmark'></i></div></div>" 
+                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:10px'></i></div><input input type='text' name='field_input' value="
+                        +$(this).val()+" readonly></div>" 
                 
                 
                 ).insertAfter( ".element1" );

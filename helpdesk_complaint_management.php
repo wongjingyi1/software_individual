@@ -165,7 +165,7 @@ include "reusable_components/user_session.php"
                                                 <td>Executive</td>
                                                 <td class='status'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td class='d-flex justify-content-center align-items-center'><i class='fa-regular fa-pen-to-square'></i>&nbsp;<i class='fa-solid fa-eye '></i></td>
+                                                <td class='d-flex justify-content-center align-items-center'><i class='fa-regular fa-pen-to-square'></i><span style='padding:5px'><span><i class='fa-solid fa-eye '></i></td>
                                             </tr>";
                                     }
                                 }
@@ -245,7 +245,7 @@ include "reusable_components/user_session.php"
                     var table = document.querySelectorAll('.pRow');
                     var rowCount = table.length;
 
-                    // if the table row is lager than 1
+                    // if the table row is larger than 1
                     if (rowCount > 1) {
                         // get the row tag (tr)
                         var table_row = ev.target.parentElement.parentElement;

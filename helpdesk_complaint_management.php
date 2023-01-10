@@ -108,13 +108,15 @@ include "reusable_components/user_session.php"
                                 </div>
                                 <div class="modal-body">
                                 <form>
-                                    <select name="assign_to">
-                                        <option value="not_relevant">Not Relevant</option>
-                                        <option value="fict">FICT</option>
-                                        <option value="registration">Registration</option>
-                                        <option value="fame">FAME</option>
-                                        <option value="library">Library</option>
-                                    </select>
+                                    <div class="d-flex justify-content-center align-items-center my-3">
+                                    <span style="padding-right:10px">Save to:</span><select style="margin:0px" name="assign_to">
+                                            <option value="not_relevant">Not Relevant</option>
+                                            <option value="fict">FICT</option>
+                                            <option value="registration">Registration</option>
+                                            <option value="fame">FAME</option>
+                                            <option value="library">Library</option>
+                                        </select>
+                                    </div>
                                     <div class="d-flex justify-content-center align-items-center my-3">
                                             <div class='form1'>
                                                 <div class='element1'></div>                             

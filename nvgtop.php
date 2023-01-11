@@ -142,7 +142,7 @@
           echo "<li class='nav-heading'>Helpdesk</li>
 
                 <li class='nav-item'>
-                  <a class='nav-link collapsed' href='#'>
+                  <a class='nav-link collapsed' href='helpdesk_complaint_management.php'>
                   <i class='fa-solid fa-box-archive'></i>    
                     <span>Complaint Inbox</span>
                     <span class='badge bg-success badge-number ms-auto'>3</span>

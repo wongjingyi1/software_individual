@@ -83,7 +83,7 @@ include "reusable_components/user_session.php"
                                     <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close" ></button>
                                 </div>
                                 <div class="d-flex justify-content-center" style="padding-bottom:1rem">
-                                <form method="POST" >
+                                <form method="POST" action="">
                                     <input placeholder="Enter title group name" type='text' class="text-center fw-bold my-3" name='group_name'>
                                     <div class="d-flex justify-content-center align-items-center my-3">
                                         <div class='form1'>
@@ -109,18 +109,36 @@ include "reusable_components/user_session.php"
                                 <div class="modal-body">
                                 <form>
                                     <div class="d-flex justify-content-center align-items-center my-3">
-                                    <span style="padding-right:10px">Save to:</span><select style="margin:0px" name="assign_to">
-                                            <option value="not_relevant">Not Relevant</option>
-                                            <option value="fict">FICT</option>
-                                            <option value="registration">Registration</option>
-                                            <option value="fame">FAME</option>
-                                            <option value="library">Library</option>
+                                    <span style="padding-right:10px">Save to:</span>
+                                        <select style="margin:0px" name="available_group">
+                                            <?php
+                                                include 'config/database.php';
+
+                                                try {
+                                                    $query = "SELECT DISTINCT group_name from complaint";
+                                                    $stmt = $con->prepare($query);
+                                                    $stmt->execute();
+                                                    $num = $stmt->rowCount();
+                    
+                                                    if ($num > 0) {
+                                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                            extract($row);
+                                                            echo $group_name;
+                                                            echo "<option value='$group_name'>$group_name</option>";
+                                                        }
+                                                    }
+                                                    
+                                                }
+                                                // show error
+                                                catch (PDOException $exception) {
+                                                    die('ERROR: ' . $exception->getMessage());
+                                                }
+                                                
+                                            
+                                            ?>
                                         </select>
-                                    </div>
-                                    <div class="d-flex justify-content-center align-items-center my-3">
-                                            <div class='form1'>
-                                                <div class='element1'></div>                             
-                                            </div>
+                                        <div class='form1'>
+                                            <div class='element1'></div>                             
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -159,7 +177,7 @@ include "reusable_components/user_session.php"
                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         extract($row);
                                         echo "<tr class='complain'>
-                                                <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$title'></td>
+                                                <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$complaintID-$title'></td>
                                                 <td class='text-center'>$complaintID</td>
                                                 <td>$title</td>
                                                 <td>Executive</td>
@@ -185,7 +203,7 @@ include "reusable_components/user_session.php"
                     $groupname=$_POST['group_name'];
                     for ($i=0 ; $i<sizeof($_POST['group_input']) ; $i++) {
                         $id=explode("-",$_POST['group_input'][$i]);
-
+                        
                         include 'config/database.php';
                         try {
                             $query = "UPDATE complaint SET group_name=:group_name WHERE complaintID = :complaintID";
@@ -262,8 +280,8 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px; margin-bottom:-2px'></i></div><input input type='text' name='group_input[]' value="
-                        +$(this).val()+" readonly></div>" 
+                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px; margin-bottom:-2px'></i></div><input input type='text' name='group_input[]' value=\'"
+                        +$(this).val()+"\' readonly></div>" 
                 
                 
                 ).insertAfter( ".element" );
@@ -275,8 +293,8 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px'></i></div><input input type='text' name='field_input' value="
-                        +$(this).val()+" readonly></div>" 
+                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px'></i></div><input input type='text' name='field_input' value=\'"
+                        +$(this).val()+"\' readonly></div>" 
                 
                 
                 ).insertAfter( ".element1" );
@@ -337,6 +355,8 @@ include "reusable_components/user_session.php"
 
 
         }
+
+
     </script>
 
 </body>

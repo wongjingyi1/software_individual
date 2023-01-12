@@ -72,7 +72,7 @@ include "reusable_components/user_session.php"
                                                 <td>$departmentID</td>
                                                 <td class='status'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye'></i></a></td>
                                             </tr>";
                                     }
                                 }
@@ -101,7 +101,7 @@ include "reusable_components/user_session.php"
                                                 <td>$departmentID</td>
                                                 <td class='status'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye'></i></a></td>
                                             </tr>";
                                     }
                                 }

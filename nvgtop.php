@@ -276,7 +276,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href='#'>
+                      <a href='helpdesk_group.php'>
                         <i class='bi bi-circle'></i><span>Group List</span>
                       </a>
                     </li>
@@ -295,7 +295,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href='#'>
+                      <a href='admin_user_list.php'>
                         <i class='bi bi-circle'></i><span>User List</span>
                       </a>
                     </li>

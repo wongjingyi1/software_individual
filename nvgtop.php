@@ -125,7 +125,7 @@
         </a>
         <ul id="forms" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="#">
+            <a href="complain_form.php">
               <span>Add New</span>
             </a>
           </li>

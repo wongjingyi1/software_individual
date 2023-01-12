@@ -93,7 +93,7 @@ include "reusable_components/user_session.php"
 
                                     <button type="button" class="btn btn-secondary close_btn" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save changes</button>
-                                <form>
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -107,39 +107,36 @@ include "reusable_components/user_session.php"
                                     <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                <form>
+                                <form method="POST">
                                     <div class="d-flex justify-content-center align-items-center my-3">
-                                    <span style="padding-right:10px">Save to:</span>
-                                        <select style="margin:0px" name="available_group">
-                                            <?php
-                                                include 'config/database.php';
+                                        <span style="padding-right:10px">Save to:</span>
+                                            <select style="margin:0px" name="available_group">
+                                                <?php
+                                                    include 'config/database.php';
 
-                                                try {
-                                                    $query = "SELECT DISTINCT group_name from complaint";
-                                                    $stmt = $con->prepare($query);
-                                                    $stmt->execute();
-                                                    $num = $stmt->rowCount();
-                    
-                                                    if ($num > 0) {
-                                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                            extract($row);
-                                                            echo $group_name;
-                                                            echo "<option value='$group_name'>$group_name</option>";
-                                                        }
+                                                    try {
+                                                        $query = "SELECT DISTINCT group_name from complaint";
+                                                        $stmt = $con->prepare($query);
+                                                        $stmt->execute();
+                                                        $num = $stmt->rowCount();
+                        
+                                                        if ($num > 0) {
+                                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                                extract($row);
+                                                                echo $group_name;
+                                                                echo "<option value='$group_name'>$group_name</option>";
+                                                            }
+                                                        }                                              
                                                     }
-                                                    
-                                                }
-                                                // show error
-                                                catch (PDOException $exception) {
-                                                    die('ERROR: ' . $exception->getMessage());
-                                                }
-                                                
-                                            
-                                            ?>
-                                        </select>
-                                        <div class='form1'>
-                                            <div class='element1'></div>                             
-                                        </div>
+                                                    // show error
+                                                    catch (PDOException $exception) {
+                                                        die('ERROR: ' . $exception->getMessage());
+                                                    }                                    
+                                                ?>
+                                            </select>
+                                            <div class='form1'>
+                                                <div class='element1'></div>                             
+                                            </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary close_btn" data-bs-dismiss="modal">Close</button>
@@ -168,7 +165,7 @@ include "reusable_components/user_session.php"
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint WHERE departmentID IS NULL OR group_name IS NULL";
+                                $query = "SELECT * from complaint WHERE group_name IS NULL";
                                 $stmt = $con->prepare($query);
                                 $stmt->execute();
                                 $num = $stmt->rowCount();
@@ -200,24 +197,53 @@ include "reusable_components/user_session.php"
             </div>
             <?php 
                 if ($_POST) {
-                    $groupname=$_POST['group_name'];
-                    for ($i=0 ; $i<sizeof($_POST['group_input']) ; $i++) {
-                        $id=explode("-",$_POST['group_input'][$i]);
-                        
-                        include 'config/database.php';
-                        try {
-                            $query = "UPDATE complaint SET group_name=:group_name WHERE complaintID = :complaintID";
-                            $stmt = $con->prepare($query);
-                            $stmt->bindParam(":complaintID", $id[0]);
-                            $stmt->bindParam(":group_name", $groupname);
-                            $stmt->execute();
-                            
-                        }
-                        // show error
-                        catch (PDOException $exception) {
-                            die('ERROR: ' . $exception->getMessage());
+                    $groupname=$_POST['group_name']=="" ? "" : $_POST['group_name'] ;
+                    $available_grp=$_POST['available_group']=="" ? "" : $_POST['available_group'] ;
+                    include 'config/database.php';
+
+                    print_r($_POST['field_input']);
+
+                    if ($groupname!="") {
+                        for ($i=0 ; $i<sizeof($_POST['group_input']) ; $i++) {
+                            $id=explode("-",$_POST['group_input'][$i]);
+ 
+                            try {
+                                $query = "UPDATE complaint SET group_name=:group_name WHERE complaintID = :complaintID";
+                                $stmt = $con->prepare($query);
+                                $stmt->bindParam(":complaintID", $id[0]);
+                                $stmt->bindParam(":group_name", $groupname);
+                                if ($stmt->execute()) {
+                                    echo "<meta http-equiv='refresh' content='0'>";
+                                }
+                                
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
                         }
                     }
+                    if ($available_grp!="") {
+                        for ($i=0 ; $i<sizeof($_POST['field_input']) ; $i++) {
+                            $id=explode("-",$_POST['field_input'][$i]);
+                        
+                            try {
+                                $query = "UPDATE complaint SET group_name=:group_name WHERE complaintID = :complaintID";
+                                $stmt = $con->prepare($query);
+                                $stmt->bindParam(":complaintID", $id[0]);
+                                $stmt->bindParam(":group_name", $available_grp);
+                                if ($stmt->execute()) {
+                                    echo "<meta http-equiv='refresh' content='0'>";
+                                }
+                                
+                            }
+                            // show error
+                            catch (PDOException $exception) {
+                                die('ERROR: ' . $exception->getMessage());
+                            }
+                        }                     
+                    }
+                        
                 }
             
             ?>
@@ -280,7 +306,7 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px; margin-bottom:-2px'></i></div><input input type='text' name='group_input[]' value=\'"
+                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px; margin-bottom:-2px'></i></div><input type='text' name='group_input[]' value=\'"
                         +$(this).val()+"\' readonly></div>" 
                 
                 
@@ -293,7 +319,7 @@ include "reusable_components/user_session.php"
 
             $(".radio_checkbox:checked").each(function(val){
                 $( 
-                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px'></i></div><input input type='text' name='field_input' value=\'"
+                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px'></i></div><input type='text' name='field_input[]' value=\'"
                         +$(this).val()+"\' readonly></div>" 
                 
                 

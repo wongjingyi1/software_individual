@@ -236,8 +236,6 @@ include "reusable_components/user_session.php"
                         <label for="formGroupExampleInput" class="form-label">Role</label>
                         <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php echo $role 
                                                                                                                 ?>" disabled>
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="<?php echo $name ?>" disabled>
                     </div>
                 </div>
                 <div class="col-9 ms-5">

@@ -3,7 +3,7 @@
     $user_session=isset($_SESSION['logged_in']) ? $_SESSION['logged_in'] : NULL;
 
     if($user_session==NULL) {
-        // header("location: login.php");
+        header("location: login.php");
     }
     else {
         include 'config/database.php';

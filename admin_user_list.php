@@ -51,7 +51,7 @@ include "reusable_components/user_session.php"
                         echo "<th>Username</th>";
                         echo "<th>Email</th>";
                         echo "<th>Role</th>";
-                        echo "<th></th>";
+                        echo "<th>Action</th>";
                         echo "</tr>";
 
                         // retrieve our table contents

@@ -46,16 +46,16 @@ include "reusable_components/user_session.php"
                 if ($num > 0) {
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         extract($row);
-                        if ($status=="pending") {
+                        if ($status=="Pending") {
                             $pending_status+=1;
                         }
-                        else if ($status=='kiv') {
+                        else if ($status=='Keep In View') {
                             $kiv_status+=1;
                         }
-                        else if ($status=='active') {
+                        else if ($status=='Active') {
                             $active_status+=1;
                         }
-                        else if ($status=='closed') {
+                        else if ($status=='Closed') {
                             $closed_status+=1;
                         }
                     }
@@ -83,16 +83,16 @@ include "reusable_components/user_session.php"
                     if ($num > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
-                            if ($status=="pending") {
+                            if ($status=="Pending") {
                                 $overall_pending_status+=1;
                             }
-                            else if ($status=='kiv') {
+                            else if ($status=='Keep In View') {
                                 $overall_kiv_status+=1;
                             }
-                            else if ($status=='active') {
+                            else if ($status=='Active') {
                                 $overall_active_status+=1;
                             }
-                            else if ($status=='closed') {
+                            else if ($status=='Closed') {
                                 $overall_closed_status+=1;
                             }
                         }
@@ -122,16 +122,16 @@ include "reusable_components/user_session.php"
                     if ($num > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
-                            if ($status=="pending") {
+                            if ($status=="Pending") {
                                 $executive_pending_status+=1;
                             }
-                            else if ($status=='kiv') {
+                            else if ($status=='Keep In View') {
                                 $executive_kiv_status+=1;
                             }
-                            else if ($status=='active') {
+                            else if ($status=='Active') {
                                 $executive_active_status+=1;
                             }
-                            else if ($status=='closed') {
+                            else if ($status=='Closed') {
                                 $executive_closed_status+=1;
                             }
                         }
@@ -177,7 +177,7 @@ include "reusable_components/user_session.php"
             </div>
             <?php 
                 if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
-                    echo "<div class='text-decoration-underline py-4'>Complaint Management</div>
+                    echo "<div class='py-4'>Complaint Management</div>
                             <div class='d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row'>
                                 <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center py-3'>
@@ -203,12 +203,6 @@ include "reusable_components/user_session.php"
                                     <div class='text-white text-center'>
                                         <div>Closed</div>
                                         <h3>$overall_closed_status</h3>
-                                    </div>
-                                </div>
-                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
-                                    <div class='text-white text-center'>
-                                        <div>Group</div>
-                                        <h3>3</h3>
                                     </div>
                                 </div>
                             </div>";
@@ -248,7 +242,7 @@ include "reusable_components/user_session.php"
             <div class="text-decoration-underline py-4">Latest Information</div>
             <div class="overflow-auto">
                 <table class='table table-hover table-responsive table-bordered'>
-                    <tr>
+                    <tr class="text-center">
                         <th>Title</th>
                         <th>Executive</th>
                         <th>Status</th>
@@ -272,9 +266,9 @@ include "reusable_components/user_session.php"
                                         echo "<tr>
                                                 <td>$title</td>
                                                 <td>$department_name</td>
-                                                <td>$status</td>
+                                                <td class='text-center'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                                <td class='text-center'><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye'></i></a></td>
                                             </tr>";
                                     }
                                 }
@@ -301,9 +295,9 @@ include "reusable_components/user_session.php"
                                         echo "<tr>
                                                 <td>$title</td>
                                                 <td>$department_name</td>
-                                                <td>$status</td>
+                                                <td class='text-center'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                                <td class='text-center'><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye'></i></a></td>
                                             </tr>";
                                     }
                                 }
@@ -331,9 +325,9 @@ include "reusable_components/user_session.php"
                                         echo "<tr>
                                                 <td>$title</td>
                                                 <td>$department_name</td>
-                                                <td>$status</td>
+                                                <td class='text-center'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye fa-2x'></i></a></td>
+                                                <td class='text-center'><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye'></i></a></td>
                                             </tr>";
                                     }
                                 }

@@ -4,7 +4,7 @@ $host = "localhost";
 $db_name = "complaint_system";
 $username = "jackyw";
 $password = "XaQ.FjSt!g!aPNmd";
-
+  
 try {
     $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // show error

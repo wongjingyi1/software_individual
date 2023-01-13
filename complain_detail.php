@@ -67,7 +67,7 @@
                         $title=$title;
                         $detail=$detail;
                         $status=$status;
-                        $department=$category;
+                        $department=$department_name;
                         $date=$createdate;
                         $note=$notetext;
                         $file=$filename;

@@ -173,7 +173,7 @@ include "reusable_components/user_session.php"
                 <div class="row d-flex align-items-center my-3">
                     <div class="py-2 col-4">Action: </div>
                     <div class="col-8 px-0 d-flex align-items-center">
-                        <input type="radio" name="action" value="kiv" id="accept" class="ms-1 mx-2" checked>
+                        <input type="radio" name="action" value="active" id="accept" class="ms-1 mx-2" checked>
                         <label for="accept" class="me-4">Accept</label>
                         <input type="radio" name="action" value="closed" id="closed" class="ms-1 mx-2">
                         <label for="closed" class="me-4">Closed</label>

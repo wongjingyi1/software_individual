@@ -58,7 +58,7 @@ include "reusable_components/user_session.php"
 
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Complaint Management</h1>
+            <h1>Executive Complaint Management</h1>
         </div><!-- End Page Title -->
         <section class="container section">
             <div class="row">
@@ -72,88 +72,12 @@ include "reusable_components/user_session.php"
                         <option value="closed">Closed</option>
                     </select>
                 </div>
-                <div class="col-md-5 col-12 d-flex align-items-center justify-content-md-center justify-content-start px-md-0 px-sm-5 px-0 mb-md-0 mb-3">
-                    <div class="me-2">Group:</div>
-                    <button class="btn btn-dark me-2" type="button" data-bs-target="#create_group" data-bs-toggle="modal" onclick='pass_data()'>Create</button>
-                    <div class="modal fade" id="create_group" tabindex="-1" aria-labelledby="modal_create_group" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modal_create_group">Create New Group</h1>
-                                    <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close" ></button>
-                                </div>
-                                <div class="d-flex justify-content-center" style="padding-bottom:1rem">
-                                <form method="POST" action="">
-                                    <input placeholder="Enter title group name" type='text' class="text-center fw-bold my-3" name='group_name'>
-                                    <div class="d-flex justify-content-center align-items-center my-3">
-                                        <div class='form1'>
-                                            <div class='element'></div>                             
-                                        </div>
-                                    </div>
-
-                                    <button type="button" class="btn btn-secondary close_btn" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-secondary me-2" type="button" data-bs-target="#add_group" data-bs-toggle="modal" onclick='pass_data1()'>Add to ...</button>
-                    <div class="modal fade" id="add_group" tabindex="-1" aria-labelledby="modal_add_group" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="modal_add_group">Add to ...</h1>
-                                    <button type="button" class="btn-close close_btn" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                <form method="POST">
-                                    <div class="d-flex justify-content-center align-items-center my-3">
-                                        <span style="padding-right:10px">Save to:</span>
-                                            <select style="margin:0px" name="available_group">
-                                                <?php
-                                                    include 'config/database.php';
-
-                                                    try {
-                                                        $query = "SELECT DISTINCT group_name from complaint";
-                                                        $stmt = $con->prepare($query);
-                                                        $stmt->execute();
-                                                        $num = $stmt->rowCount();
-                        
-                                                        if ($num > 0) {
-                                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                                extract($row);
-                                                                echo $group_name;
-                                                                echo "<option value='$group_name'>$group_name</option>";
-                                                            }
-                                                        }                                              
-                                                    }
-                                                    // show error
-                                                    catch (PDOException $exception) {
-                                                        die('ERROR: ' . $exception->getMessage());
-                                                    }                                    
-                                                ?>
-                                            </select>
-                                            <div class='form1'>
-                                                <div class='element1'></div>                             
-                                            </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary close_btn" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="overflow-auto">
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr class="text-center">
-                        <th></th>
-                        <th>No</th>
+                        <th>ID</th>
                         <th>Title</th></a>
                         <th>Executive</th>
                         <th>Status</th>
@@ -161,12 +85,13 @@ include "reusable_components/user_session.php"
                         <th>Action</th>
                     </tr>
                     <?php 
-                        if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
+                        if ($role=='executive' || $role=='admin') {
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint WHERE group_name IS NULL";
+                                $query = "SELECT * from complaint WHERE departmentID=:departmentID";                  
                                 $stmt = $con->prepare($query);
+                                $stmt->bindParam(":departmentID", $department_ID);
                                 $stmt->execute();
                                 $num = $stmt->rowCount();
 
@@ -174,13 +99,12 @@ include "reusable_components/user_session.php"
                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         extract($row);
                                         echo "<tr class='complain'>
-                                                <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$complaintID-$title'></td>
                                                 <td class='text-center'>$complaintID</td>
                                                 <td>$title</td>
                                                 <td>Executive</td>
                                                 <td class='status'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td class='d-flex justify-content-center align-items-center'><i class='fa-regular fa-pen-to-square'></i><span style='padding:5px'><span><i class='fa-solid fa-eye '></i></td>
+                                                <td class='d-flex justify-content-center align-items-center'><a href='helpdesk_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></i><a/><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>
                                             </tr>";
                                     }
                                 }
@@ -195,84 +119,8 @@ include "reusable_components/user_session.php"
                     ?>
                 </table>
             </div>
-            <?php 
-                if ($_POST) {
-                    $groupname=$_POST['group_name']=="" ? "" : $_POST['group_name'] ;
-                    $available_grp=$_POST['available_group']=="" ? "" : $_POST['available_group'] ;
-                    include 'config/database.php';
 
-                    print_r($_POST['field_input']);
-
-                    if ($groupname!="") {
-                        for ($i=0 ; $i<sizeof($_POST['group_input']) ; $i++) {
-                            $id=explode("-",$_POST['group_input'][$i]);
  
-                            try {
-                                $query = "UPDATE complaint SET group_name=:group_name WHERE complaintID = :complaintID";
-                                $stmt = $con->prepare($query);
-                                $stmt->bindParam(":complaintID", $id[0]);
-                                $stmt->bindParam(":group_name", $groupname);
-                                if ($stmt->execute()) {
-                                    echo "<meta http-equiv='refresh' content='0'>";
-                                }
-                                
-                            }
-                            // show error
-                            catch (PDOException $exception) {
-                                die('ERROR: ' . $exception->getMessage());
-                            }
-                        }
-                    }
-                    if ($available_grp!="") {
-                        for ($i=0 ; $i<sizeof($_POST['field_input']) ; $i++) {
-                            $id=explode("-",$_POST['field_input'][$i]);
-                        
-                            try {
-                                $query = "UPDATE complaint SET group_name=:group_name WHERE complaintID = :complaintID";
-                                $stmt = $con->prepare($query);
-                                $stmt->bindParam(":complaintID", $id[0]);
-                                $stmt->bindParam(":group_name", $available_grp);
-                                if ($stmt->execute()) {
-                                    echo "<meta http-equiv='refresh' content='0'>";
-                                }
-                                
-                            }
-                            // show error
-                            catch (PDOException $exception) {
-                                die('ERROR: ' . $exception->getMessage());
-                            }
-                        }                     
-                    }
-                        
-                }
-            
-            ?>
-            <?php 
-                // if ($status == "pending" || $status == "keep_in_view") {
-                //     echo "btn-waring";
-                // } 
-                // else if ($status == "active") {
-                //     echo "btn-success";
-                // } 
-                // else {
-                //     echo "btn-secondary";
-                // }
-            ?>
-            <?php
-                // switch ($status) {
-                //         case "pending":
-                //             echo "Pending";
-                //             break;
-                //         case "keep_in_view":
-                //             echo "Keep in View";
-                //             break;
-                //         case "active":
-                //             echo "Active";
-                //             break;
-                //         default:
-                //             echo "Closed";
-                // } 
-            ?>
         </section>
     </main>
     <?php include "footer.php" ?>
@@ -281,53 +129,6 @@ include "reusable_components/user_session.php"
     <script src="js/main.js"></script>
 
     <script>
-        function drop_item() {
-            document.querySelector('#order').onclick = function(ev) {
-                // only if the innerHTML (tag content) is "Delete"
-                if (ev.target.innerHTML == "Delete") {
-                    // get all the tag which name as ".pRow"
-                    var table = document.querySelectorAll('.pRow');
-                    var rowCount = table.length;
-
-                    // if the table row is larger than 1
-                    if (rowCount > 1) {
-                        // get the row tag (tr)
-                        var table_row = ev.target.parentElement.parentElement;
-                        table_row.remove(table_row);
-                    } else {
-                        alert("You remain at least one row at the table");
-                    }
-
-                }
-            }
-        }
-
-        function pass_data() {
-
-            $(".radio_checkbox:checked").each(function(val){
-                $( 
-                    "<div class='d-flex field'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px; margin-bottom:-2px'></i></div><input type='text' name='group_input[]' value=\'"
-                        +$(this).val()+"\' readonly></div>" 
-                
-                
-                ).insertAfter( ".element" );
-            })
-
-            
-        }
-        function pass_data1() {
-
-            $(".radio_checkbox:checked").each(function(val){
-                $( 
-                    "<div class='d-flex field1'><div class='drop_item'><i class='fa-solid fa-xmark' style='padding-right:5px'></i></div><input type='text' name='field_input[]' value=\'"
-                        +$(this).val()+"\' readonly></div>" 
-                
-                
-                ).insertAfter( ".element1" );
-            })
-        }
-
-        
 
         function filter(fil_ter) {
             var complain_length=document.getElementsByClassName("complain").length;

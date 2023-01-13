@@ -263,13 +263,8 @@ include "reusable_components/user_session.php"
                     <div class="mb-3">
                         <label for="helpdesk" class="form-label text-end m-0 pe-2">Helpdesk</label>
                         <select class="form-select" id="helpdesk" name="helpdesk" >
-<<<<<<< HEAD
                             <option value="1">True</option>
                             <option value="0" selected>False</option>
-=======
-                            <option value="true">True</option>
-                            <option value="false" selected>False</option>
->>>>>>> 416f0c6f7b90bae2fa252c2792268b2babf8405d
                         </select>
                     </div>
                     <div class="d-flex mt-5">

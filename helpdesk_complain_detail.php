@@ -22,8 +22,8 @@ include "reusable_components/user_session.php"
         <div class="pagetitle">
             <h1>Complaint Form</h1>
             <?php
+            $complaintID = isset($_GET['complaintID']) ? $_GET['complaintID'] : "";
             try {
-                $complaintID = isset($_GET['complaintID']) ? $_GET['complaintID'] : "";
                 $query = "SELECT * from complaint 
                                 left join department on complaint.departmentID=department.department_ID 
                                 left join notetable on complaint.noteID=notetable.noteID
@@ -75,6 +75,7 @@ include "reusable_components/user_session.php"
                     $stmt_in->bindParam(':complaintID', $complaintID);
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Updated successfully.</div>";
+                        echo "window.location.href = 'dashboard.php'";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                     }
@@ -91,7 +92,7 @@ include "reusable_components/user_session.php"
             <form action="<?php echo $_SERVER["PHP_SELF"] . "?complaintID=$complaintID"; ?>" method="POST" enctype="multipart/form-data">
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Title</div>
-                    <div class="col-8 py-2 border border-3 rounded">Complaint Title</div>
+                    <div class="col-8 py-2 border border-3 rounded">Complaint Title <?php echo $complaintID ?></div>
                 </div>
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Detail</div>

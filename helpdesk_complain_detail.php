@@ -70,7 +70,7 @@ include "reusable_components/user_session.php"
                     $stmt_in->bindParam(':departmentID', $assign);
                     $stmt_in->bindParam(':complaintID', $complaintID);
                     if ($stmt_in->execute()) {
-                        echo "<div class='alert alert-success'>Updated successfully.</div>";
+                        echo "<meta http-equiv='refresh' content='0'>";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                     }
@@ -98,7 +98,7 @@ include "reusable_components/user_session.php"
                     <div class="col-8 py-2 border border-3 rounded"><img src="images/no_people_img.png" alt="" width="100px"></div>
                 </div>
                 <div class="row d-flex align-items-center my-3">
-                    <div class="col-4 py-2">Executive</div>
+                    <div class="col-4 py-2">Department</div>
                     <div class="col-8 py-2 border border-3 rounded"><?php echo $department?></div>
                 </div>
                 <div class="row d-flex align-items-center my-3 border-bottom border-2 pb-3">
@@ -168,7 +168,7 @@ include "reusable_components/user_session.php"
                 <div class="row d-flex align-items-center my-3">
                     <div class="py-2 col-4">Action: </div>
                     <div class="col-8 px-0 d-flex align-items-center">
-                        <input type="radio" name="action" value="pending" id="accept" class="ms-1 mx-2" checked>
+                        <input type="radio" name="action" value="kiv" id="accept" class="ms-1 mx-2" checked>
                         <label for="accept" class="me-4">Accept</label>
                         <input type="radio" name="action" value="closed" id="closed" class="ms-1 mx-2">
                         <label for="closed" class="me-4">Closed</label>

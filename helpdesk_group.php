@@ -76,9 +76,9 @@ include "reusable_components/user_session.php"
                                                             <table class='table table-hover table-responsive table-bordered mb-0'>
                                                                 <tr>
                                                                     <th>Title</th>
-                                                                    <th>Executive</th>
+                                                                    <th>Department</th>
                                                                     <th>Status</th>
-                                                                    <th>Last Updated</th>
+                                                                    <th>Created Date</th>
                                                                     <th>Action</th>
                                                                 </tr>";
 
@@ -91,7 +91,7 @@ include "reusable_components/user_session.php"
                                         while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
                                             $title=$row1['title'];
                                             $status=$row1['status'];
-                                            $date=$row1['modifydate'];
+                                            $date=$row1['createdate'];
                                             $complaint_id=$row1['complaintID'];
                                                             echo "
                                                                 <tr>
@@ -99,7 +99,7 @@ include "reusable_components/user_session.php"
                                                                     <td>Executive</td>
                                                                     <td>$status</td>
                                                                     <td>$date</td>
-                                                                    <td><a href='complain_detail.php?complaintID=$complaint_id'><i class='fa-solid fa-eye '></i></a></td>
+                                                                    <td><a href='helpdesk_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></i></a><a href='complain_detail.php?complaintID=$complaint_id'><i class='fa-solid fa-eye '></i></a></td>
                                                                 </tr>";
                                         }
                                     }

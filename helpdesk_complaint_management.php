@@ -157,7 +157,7 @@ include "reusable_components/user_session.php"
                         <th>Title</th></a>
                         <th>Department</th>
                         <th>Status</th>
-                        <th>Last Updated</th>
+                        <th>Create Date</th>
                         <th>Action</th>
                     </tr>
                     <?php 
@@ -165,7 +165,7 @@ include "reusable_components/user_session.php"
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint INNER JOIN department ON complaint.departmentID=department.department_ID WHERE group_name IS NULL";
+                                $query = "SELECT * from complaint LEFT JOIN department ON complaint.departmentID=department.department_ID";
                                 $stmt = $con->prepare($query);
                                 $stmt->execute();
                                 $num = $stmt->rowCount();
@@ -179,7 +179,7 @@ include "reusable_components/user_session.php"
                                                 <td>$title</td>
                                                 <td>$department_name</td>
                                                 <td class='status'>$status</td>
-                                                <td>$modifydate</td>
+                                                <td>$createdate</td>
                                                 <td class='d-flex justify-content-center align-items-center'><a href='helpdesk_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></a></i><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>
                                             </tr>";
                                     }

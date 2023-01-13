@@ -7,7 +7,7 @@ include "reusable_components/user_session.php"
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin - User Detail</title>
+    <title>Add User - Admin</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <script src="https://kit.fontawesome.com/f9f6f2f33c.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -33,7 +33,7 @@ include "reusable_components/user_session.php"
 <?php include "nvgtop.php" ?>
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Profile</h1>
+            <h1>Add New User</h1>
         </div><!-- End Page Title -->
         <section class="container section">
 
@@ -65,7 +65,7 @@ include "reusable_components/user_session.php"
                         </select>
                     </div>
                     <div class="mb-3">
-                    <label for="department" class="form-label text-end m-0 pe-2">Role</label>
+                    <label for="department" class="form-label text-end m-0 pe-2">Department</label>
                         <select class="form-select" id="department" name="department" >
                             <?php 
                                 include 'config/database.php';
@@ -77,7 +77,7 @@ include "reusable_components/user_session.php"
                                 $num = $stmt->rowCount();
 
                                 if ($num > 0) {
-                                    echo "<option value=''>Please select department</option>";
+                                    echo "<option value=''> -- Optional --</option>";
                                     // retrieve our table contents
                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         extract($row);

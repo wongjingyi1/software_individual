@@ -56,7 +56,12 @@ include "reusable_components/user_session.php"
                 $assign = $_POST['assign'];
 
                 //check complaint group
-                $complaint_group = $_POST['complaint_group'];
+                if($_POST['complaint_group'] == ""){
+                    $complaint_group = NULL;
+                }else{
+                    $complaint_group = $_POST['complaint_group'];
+                }
+
 
                 //check action
                 $action = $_POST['action'];

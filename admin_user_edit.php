@@ -69,6 +69,7 @@ include "reusable_components/user_session.php"
         $uppercase = preg_match('@[A-Z]@', $_POST['new_pass']);
         $lowercase = preg_match('@[a-z]@', $_POST['new_pass']);
         $number    = preg_match('@[0-9]@', $_POST['new_pass']);
+        $helpdesk = $_POST['helpdesk'];
 
         $image = !empty($_FILES["image"]["name"])
             ? sha1_file($_FILES['image']['tmp_name']) . "-" . basename($_FILES["image"]["name"])
@@ -81,10 +82,11 @@ include "reusable_components/user_session.php"
         // error message is empty
         $file_upload_error_messages = "";
 
+        //new password = new_pas ..... old password =
         if (empty($_POST['username'])) {
             echo "<div class='alert alert-danger'>Please make sure have * column are not emplty!</div>";
         } else {
-            if (!empty($_POST['new_pass']) || !empty($_POST['con_pass'])) {
+            if (!empty($_POST['new_pass'])) {
 
                 if (empty($_POST['new_pass'])) {
                     $file_upload_error_messages .= "<div>If want to change new passward then new password field can not be empty!</div>";
@@ -118,8 +120,10 @@ include "reusable_components/user_session.php"
                     $file_upload_error_messages .= "<div>Your password must contain at least one uppercase, one lowercase and one number!</div>";
                 }
 
-                if ($_POST['new_pass'] !== $_POST['con_pass']) {
-                    $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";
+                if($_POST['new_pass'] !== ""){
+                    if ($_POST['new_pass'] !== $_POST['con_pass']) {
+                        $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";
+                    }
                 }
 
                 if (!empty($_FILES["image"]["name"])) {
@@ -178,7 +182,7 @@ include "reusable_components/user_session.php"
                         // in this case, it seemed like we have so many fields to pass and
                         // it is better to label them and not use question marks
                         $query = "UPDATE users
-                        SET username=:username, password=:password, profile=:image WHERE userID=:id";
+                        SET username=:username, password=:password, profile=:image, helpdesk=:helpdesk WHERE userID=:id";
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
                         // posted values
@@ -193,13 +197,14 @@ include "reusable_components/user_session.php"
                         $stmt->bindParam(':password', $oldpassword);
                         $stmt->bindParam(':id', $id);
                         $stmt->bindParam(':image', $image);
+                        $stmt->bindParam(':helpdesk', $helpdesk);
                         // Execute the query
                         if ($stmt->execute()) {
                             // if the image not same then remove previous one and not the default one
                             if (!strpos($old_image, "profile_pic.jpg")) {
                                 unlink($old_image);
                             }
-                            echo "<script type=\"text/javascript\"> window.location.href='customer_read.php?action=sucessful'</script>";
+                            header("Location: admin_user_list.php");
                         } else {
                             echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                         }
@@ -213,7 +218,7 @@ include "reusable_components/user_session.php"
         }
     }
     ?>
-            <form class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"]; 
+            <form class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"]."?userid={$current_id}"; 
                                                 ?>" method="POST" enctype="multipart/form-data">
                 <div class="col-3 text-center">
                     <img src="<?php  
@@ -255,11 +260,17 @@ include "reusable_components/user_session.php"
                         <label for="com_pass" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" name="con-pass" id="com_pass">
                     </div>
+                    <div class="mb-3">
+                        <label for="helpdesk" class="form-label text-end m-0 pe-2">Helpdesk</label>
+                        <select class="form-select" id="helpdesk" name="helpdesk" >
+                            <option value="1">True</option>
+                            <option value="0" selected>False</option>
+                        </select>
+                    </div>
                     <div class="d-flex mt-5">
                         <button type="submit" class="btn btn-secondary col-4">Update</button>
                         <button type="button" class="btn btn-secondary ms-3 col-4" onclick="window.location.href = 'dashboard.php'">Cancel</button>
                     </div>
-
                 </div>
                 </div>
             </form>

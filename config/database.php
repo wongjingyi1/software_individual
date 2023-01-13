@@ -3,7 +3,7 @@
 $host = "localhost";
 $db_name = "complaint_system";
 $username = "complaint_system";
-$password = "_K3Lpkq360V/9.kM";
+$password = "FTueUImDoAAW-Cf9";
   
 try {
     $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);

@@ -24,7 +24,7 @@ include "reusable_components/user_session.php"
             <?php
             try {
                 $complaintID = isset($_GET['complaintID']) ? $_GET['complaintID'] : "";
-                $query = "SELECT title,detail,status,category,createdate,notetext,filename from complaint 
+                $query = "SELECT title,detail,status,category,createdate,notetext,filename,department.department_name from complaint 
                                 left join department on complaint.departmentID=department.department_ID 
                                 left join notetable on complaint.noteID=notetable.noteID
                                 left join attachment on complaint.attachmentID=attachment.attachmentID
@@ -40,7 +40,7 @@ include "reusable_components/user_session.php"
                     $title = $title;
                     $detail = $detail;
                     $status = $status;
-                    $department = $category;
+                    $department = $department_name;
                     $date = $createdate;
                     $note = $notetext;
                     $file = $filename;

@@ -82,7 +82,7 @@ include "reusable_components/user_session.php"
         $file_upload_error_messages = "";
 
         if (empty($_POST['username'])) {
-            echo "<div class='alert alert-danger'>Please make sure have * column are not emplty!</div>";
+            echo "<div class='alert alert-danger'>Please make sure feild in </div>";
         } else {
             if (!empty($_POST['new_pass']) || !empty($_POST['con_pass'])) {
 

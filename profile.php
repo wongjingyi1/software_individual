@@ -204,7 +204,6 @@ include "reusable_components/user_session.php"
                             if (!strpos($old_image, "profile_pic.jpg")) {
                                 unlink($old_image);
                             }
-                            echo "<script type=\"text/javascript\"> window.location.href='customer_read.php?action=sucessful'</script>";
                         } else {
                             echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                         }

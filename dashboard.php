@@ -67,6 +67,7 @@ include "reusable_components/user_session.php"
                 die('ERROR: ' . $exception->getMessage());
             }
             
+            //change here for display
             if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
                 $overall_pending_status=0;
                 $overall_kiv_status=0;

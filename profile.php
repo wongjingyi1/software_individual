@@ -184,13 +184,18 @@ include "reusable_components/user_session.php"
                         // in this case, it seemed like we have so many fields to pass and
                         // it is better to label them and not use question marks
                         $query = "UPDATE users
-                        SET username=:username, password=:password, profile=:image WHERE userID=:id";
+                        SET username=:username, password=:password, image=:image WHERE userID=:id";
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
                         // posted values
                         $username = htmlspecialchars(strip_tags($_POST['username']));
                         if (!empty($_POST['new_pass'])) {
                             $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
+                        }
+
+                        $flag_same_image = false;
+                        if ($image == "NULL" ) {
+                            $flag_same_image = true;
                         }
 
                         // bind the parameters
@@ -201,10 +206,9 @@ include "reusable_components/user_session.php"
                         // Execute the query
                         if ($stmt->execute()) {
                             // if the image not same then remove previous one and not the default one
-                            if (!strpos($old_image, "profile_pic.jpg")) {
-                                unlink($old_image);
+                            if (!$flag_same_image && !strpos($image, "profile_pic.jpg")) {
+                                unlink($image);
                             }
-                            echo "<script type=\"text/javascript\"> window.location.href='customer_read.php?action=sucessful'</script>";
                         } else {
                             echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                         }
@@ -260,7 +264,7 @@ include "reusable_components/user_session.php"
                     </div>
                     <div class="mb-3">
                         <label for="com_pass" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" name="con-pass" id="com_pass">
+                        <input type="password" class="form-control" name="con_pass" id="com_pass">
                     </div>
                     <div class="d-flex mt-5">
                         <button type="submit" class="btn btn-secondary col-4">Update</button>

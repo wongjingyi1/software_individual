@@ -26,30 +26,28 @@ include "reusable_components/user_session.php"
         }
     </style>
     <script>
-        $(document).on('click','.close_btn', function () {
+        $(document).on('click', '.close_btn', function() {
             $(".radio_checkbox").prop('checked', false)
             $(".field").remove();
         });
 
-        $(document).on('click','.field', function () {
-            if ($(".field").length>1) {
+        $(document).on('click', '.field', function() {
+            if ($(".field").length > 1) {
                 $(this).remove()
             }
-            
+
         });
-        $(document).on('click','.close_btn', function () {
+        $(document).on('click', '.close_btn', function() {
             $(".radio_checkbox").prop('checked', false)
             $(".field1").remove();
         });
 
-        $(document).on('click','.field1', function () {
-            if ($(".field1").length>1) {
+        $(document).on('click', '.field1', function() {
+            if ($(".field1").length > 1) {
                 $(this).remove()
             }
-            
+
         });
-
-
     </script>
 </head>
 
@@ -84,21 +82,21 @@ include "reusable_components/user_session.php"
                         <th>Last Updated</th>
                         <th>Action</th>
                     </tr>
-                    <?php 
-                        if ($role=='executive' || $role=='admin') {
-                            include 'config/database.php';
+                    <?php
+                    if ($role == 'executive' || $role == 'admin') {
+                        include 'config/database.php';
 
-                            try {
-                                $query = "SELECT * from complaint INNER JOIN department ON complaint.departmentID=department.department_ID WHERE departmentID=:departmentID";                  
-                                $stmt = $con->prepare($query);
-                                $stmt->bindParam(":departmentID", $department_ID);
-                                $stmt->execute();
-                                $num = $stmt->rowCount();
+                        try {
+                            $query = "SELECT * from complaint INNER JOIN department ON complaint.departmentID=department.department_ID WHERE departmentID=:departmentID";
+                            $stmt = $con->prepare($query);
+                            $stmt->bindParam(":departmentID", $department_ID);
+                            $stmt->execute();
+                            $num = $stmt->rowCount();
 
-                                if ($num > 0) {
-                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        extract($row);
-                                        echo "<tr class='complain'>
+                            if ($num > 0) {
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row);
+                                    echo "<tr class='complain'>
                                                 <td class='text-center'>$complaintID</td>
                                                 <td>$title</td>
                                                 <td>$department_name</td>
@@ -106,21 +104,20 @@ include "reusable_components/user_session.php"
                                                 <td>$modifydate</td>
                                                 <td class='d-flex justify-content-center align-items-center'><a href='executive_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></i><a/><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>
                                             </tr>";
-                                    }
                                 }
-                                
-                            }
-                            // show error
-                            catch (PDOException $exception) {
-                                die('ERROR: ' . $exception->getMessage());
                             }
                         }
-                    
+                        // show error
+                        catch (PDOException $exception) {
+                            die('ERROR: ' . $exception->getMessage());
+                        }
+                    }
+
                     ?>
                 </table>
             </div>
 
- 
+
         </section>
     </main>
     <?php include "footer.php" ?>
@@ -129,61 +126,54 @@ include "reusable_components/user_session.php"
     <script src="js/main.js"></script>
 
     <script>
-
         function filter(fil_ter) {
-            var complain_length=document.getElementsByClassName("complain").length;
-            
-            if (fil_ter.value=='pending') {
-                for (var i=0 ; i<complain_length ; i++) {
-                    if (!(document.getElementsByClassName("status")[i].innerHTML=="pending")) {
+            var complain_length = document.getElementsByClassName("complain").length;
+
+            if (fil_ter.value == 'pending') {
+                for (var i = 0; i < complain_length; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML == "pending")) {
                         document.getElementsByClassName("complain")[i].style.display = "none";
-                    }
-                    else {
+                    } else {
                         document.getElementsByClassName("complain")[i].style.display = "";
                     }
                 }
             }
-            if (fil_ter.value=='keep_in_view') {
-                for (var i=0 ; i<complain_length ; i++) {
-                    if (!(document.getElementsByClassName("status")[i].innerHTML=="kiv")) {
+            if (fil_ter.value == 'keep_in_view') {
+                for (var i = 0; i < complain_length; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML == "kiv")) {
                         document.getElementsByClassName("complain")[i].style.display = "none";
-                    }
-                    else {
+                    } else {
                         document.getElementsByClassName("complain")[i].style.display = "";
                     }
                 }
             }
-            if (fil_ter.value=='active') {
-                for (var i=0 ; i<complain_length ; i++) {
-                    if (!(document.getElementsByClassName("status")[i].innerHTML=="active")) {
+            if (fil_ter.value == 'active') {
+                for (var i = 0; i < complain_length; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML == "active")) {
                         document.getElementsByClassName("complain")[i].style.display = "none";
-                    }
-                    else {
+                    } else {
                         document.getElementsByClassName("complain")[i].style.display = "";
                     }
                 }
             }
-            if (fil_ter.value=='closed') {
-                for (var i=0 ; i<complain_length ; i++) {
-                    if (!(document.getElementsByClassName("status")[i].innerHTML=="closed")) {
+            if (fil_ter.value == 'closed') {
+                for (var i = 0; i < complain_length; i++) {
+                    if (!(document.getElementsByClassName("status")[i].innerHTML == "closed")) {
                         document.getElementsByClassName("complain")[i].style.display = "none";
-                    }
-                    else {
+                    } else {
                         document.getElementsByClassName("complain")[i].style.display = "";
                     }
                 }
             }
-            if (fil_ter.value=='all') {
-                for (var i=0 ; i<complain_length ; i++) {
+            if (fil_ter.value == 'all') {
+                for (var i = 0; i < complain_length; i++) {
                     document.getElementsByClassName("complain")[i].style.display = "";
                 }
             }
-            
+
 
 
         }
-
-
     </script>
 
 </body>

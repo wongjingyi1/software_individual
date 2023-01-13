@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include "reusable_components/user_session.php"
 ?>
 <!DOCTYPE HTML>

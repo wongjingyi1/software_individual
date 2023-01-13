@@ -180,7 +180,7 @@ include "reusable_components/user_session.php"
                                                 <td>Executive</td>
                                                 <td class='status'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td class='d-flex justify-content-center align-items-center'><i class='fa-regular fa-pen-to-square'></i><span style='padding:5px'><span><i class='fa-solid fa-eye '></i></td>
+                                                <td class='d-flex justify-content-center align-items-center'><a href='helpdesk_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></a></i><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>
                                             </tr>";
                                     }
                                 }

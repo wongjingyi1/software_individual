@@ -22,9 +22,9 @@ include "reusable_components/user_session.php"
         <div class="pagetitle">
             <h1>Complaint Form</h1>
             <?php
-            $complaintID = isset($_GET['complaintID']) ? $_GET['complaintID'] : "";
             try {
-                $query = "SELECT * from complaint 
+                $complaintID = isset($_GET['complaintID']) ? $_GET['complaintID'] : "";
+                $query = "SELECT title,detail,status,category,createdate,notetext,filename from complaint 
                                 left join department on complaint.departmentID=department.department_ID 
                                 left join notetable on complaint.noteID=notetable.noteID
                                 left join attachment on complaint.attachmentID=attachment.attachmentID
@@ -59,11 +59,7 @@ include "reusable_components/user_session.php"
                 $complaint_group = $_POST['complaint_group'];
 
                 //check action
-                if ($_POST['action'] !== "") {
-                    $action = $_POST['action'];
-                } else {
-                    $action = "pending";
-                }
+                $action = $_POST['action'];
 
                 //insert into database
                 try {
@@ -73,9 +69,8 @@ include "reusable_components/user_session.php"
                     $stmt_in->bindParam(':status', $action);
                     $stmt_in->bindParam(':departmentID', $assign);
                     $stmt_in->bindParam(':complaintID', $complaintID);
-                    if ($stmt->execute()) {
+                    if ($stmt_in->execute()) {
                         echo "<div class='alert alert-success'>Updated successfully.</div>";
-                        echo "window.location.href = 'dashboard.php'";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                     }
@@ -89,14 +84,14 @@ include "reusable_components/user_session.php"
 
         </div><!-- End Page Title -->
         <section class="container section">
-            <form action="<?php echo $_SERVER["PHP_SELF"] . "?complaintID=$complaintID"; ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo $_SERVER["PHP_SELF"] . "?complaintID=$complaintID"; ?>" method="POST">
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Title</div>
-                    <div class="col-8 py-2 border border-3 rounded">Complaint Title <?php echo $complaintID ?></div>
+                    <div class="col-8 py-2 border border-3 rounded"><?php echo $title?></div>
                 </div>
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Detail</div>
-                    <div class="col-8 py-2 border border-3 rounded">Detail word</div>
+                    <div class="col-8 py-2 border border-3 rounded"><?php echo $detail?></div>
                 </div>
                 <div class="row my-3">
                     <div class="col-4 py-2">Photo/Video:</div>
@@ -104,16 +99,15 @@ include "reusable_components/user_session.php"
                 </div>
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Executive</div>
-                    <div class="col-8 py-2 border border-3 rounded">Ali</div>
+                    <div class="col-8 py-2 border border-3 rounded"><?php echo $department?></div>
                 </div>
                 <div class="row d-flex align-items-center my-3 border-bottom border-2 pb-3">
                     <div class="col-4 py-2">Date</div>
-                    <div class="col-8 py-2 border border-3 rounded">2020</div>
+                    <div class="col-8 py-2 border border-3 rounded"><?php echo $date?></div>
                 </div>
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4  py-2">Current Status:</div>
                     <div class="col-8  py-2 px-0">
-<<<<<<< HEAD
                         <div class="btn <?php if ($status == "pending" || $status == "keep_in_view") {
                                             echo "btn-warning";
                                         } else if ($status == "active") {
@@ -124,7 +118,7 @@ include "reusable_components/user_session.php"
                                                     case "pending":
                                                         echo "Pending";
                                                         break;
-                                                    case "keep_in_view":
+                                                    case "kiv":
                                                         echo "Keep in View";
                                                         break;
                                                     case "active":
@@ -133,9 +127,6 @@ include "reusable_components/user_session.php"
                                                     default:
                                                         echo "Closed";
                                                 } ?></div>
-=======
-                        <div class="btn btn-warning">Pending</div></div>
->>>>>>> 28bc3c0b58efd61b0866323a50fc226bd15220cc
                     </div>
                 </div>
                 </div>

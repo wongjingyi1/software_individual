@@ -255,6 +255,13 @@ include "reusable_components/user_session.php"
                         <label for="com_pass" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" name="con-pass" id="com_pass">
                     </div>
+                    <div class="mb-3">
+                        <label for="helpdesk" class="form-label text-end m-0 pe-2">Helpdesk</label>
+                        <select class="form-select" id="helpdesk" name="helpdesk" >
+                            <option value="true">True</option>
+                            <option value="false" selected>False</option>
+                        </select>
+                    </div>
                     <div class="d-flex mt-5">
                         <button type="submit" class="btn btn-secondary col-4">Update</button>
                         <button type="button" class="btn btn-secondary ms-3 col-4" onclick="window.location.href = 'dashboard.php'">Cancel</button>

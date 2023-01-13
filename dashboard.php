@@ -46,16 +46,16 @@ include "reusable_components/user_session.php"
                 if ($num > 0) {
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         extract($row);
-                        if ($status=="Pending") {
+                        if ($status=="pending") {
                             $pending_status+=1;
                         }
-                        else if ($status=='Keep In View') {
+                        else if ($status=='kiv') {
                             $kiv_status+=1;
                         }
-                        else if ($status=='Active') {
+                        else if ($status=='active') {
                             $active_status+=1;
                         }
-                        else if ($status=='Closed') {
+                        else if ($status=='closed') {
                             $closed_status+=1;
                         }
                     }
@@ -84,16 +84,16 @@ include "reusable_components/user_session.php"
                     if ($num > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
-                            if ($status=="Pending") {
+                            if ($status=="pending") {
                                 $overall_pending_status+=1;
                             }
-                            else if ($status=='Keep In View') {
+                            else if ($status=='kiv') {
                                 $overall_kiv_status+=1;
                             }
-                            else if ($status=='Active') {
+                            else if ($status=='active') {
                                 $overall_active_status+=1;
                             }
-                            else if ($status=='Closed') {
+                            else if ($status=='closed') {
                                 $overall_closed_status+=1;
                             }
                         }
@@ -123,16 +123,16 @@ include "reusable_components/user_session.php"
                     if ($num > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
-                            if ($status=="Pending") {
+                            if ($status=="pending") {
                                 $executive_pending_status+=1;
                             }
-                            else if ($status=='Keep In View') {
+                            else if ($status=='kiv') {
                                 $executive_kiv_status+=1;
                             }
-                            else if ($status=='Active') {
+                            else if ($status=='active') {
                                 $executive_active_status+=1;
                             }
-                            else if ($status=='Closed') {
+                            else if ($status=='closed') {
                                 $executive_closed_status+=1;
                             }
                         }

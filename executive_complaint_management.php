@@ -104,7 +104,7 @@ include "reusable_components/user_session.php"
                                                 <td>$department_name</td>
                                                 <td class='status'>$status</td>
                                                 <td>$modifydate</td>
-                                                <td class='d-flex justify-content-center align-items-center'><a href='helpdesk_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></i><a/><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>
+                                                <td class='d-flex justify-content-center align-items-center'><a href='executive_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></i><a/><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>
                                             </tr>";
                                     }
                                 }

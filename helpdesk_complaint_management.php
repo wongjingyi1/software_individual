@@ -155,7 +155,7 @@ include "reusable_components/user_session.php"
                         <th></th>
                         <th>No</th>
                         <th>Title</th></a>
-                        <th>Executive</th>
+                        <th>Department</th>
                         <th>Status</th>
                         <th>Last Updated</th>
                         <th>Action</th>
@@ -165,7 +165,7 @@ include "reusable_components/user_session.php"
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint WHERE group_name IS NULL";
+                                $query = "SELECT * from complaint INNER JOIN department ON complaint.departmentID=department.department_ID WHERE group_name IS NULL";
                                 $stmt = $con->prepare($query);
                                 $stmt->execute();
                                 $num = $stmt->rowCount();
@@ -177,7 +177,7 @@ include "reusable_components/user_session.php"
                                                 <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$complaintID-$title'></td>
                                                 <td class='text-center'>$complaintID</td>
                                                 <td>$title</td>
-                                                <td>Executive</td>
+                                                <td>$department_name</td>
                                                 <td class='status'>$status</td>
                                                 <td>$modifydate</td>
                                                 <td class='d-flex justify-content-center align-items-center'><a href='helpdesk_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></a></i><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>

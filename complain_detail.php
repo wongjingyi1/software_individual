@@ -71,8 +71,6 @@
                         $date=$createdate;
                         $note=$notetext;
                         $file=$filename;
-
-
                     }
                     
                 }
@@ -132,7 +130,7 @@
                     <div class="col-8 py-2 border border-3 rounded"><?php echo $note ?></div>
                 </div>
                 <?php 
-                    if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
+                    if ($role=='helpdesk' || $role=='admin' || $helpdesk==true){
                         echo "<div class='row d-flex align-items-center my-3'>
                             <div class='py-2 col-4'>Group: </div>
                                 <div class='col-8 px-0 '>

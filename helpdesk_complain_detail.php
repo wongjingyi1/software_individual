@@ -17,13 +17,78 @@ include "reusable_components/user_session.php"
 </head>
 
 <body>
-<?php include "nvgtop.php" ?>
+    <?php include "nvgtop.php" ?>
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>Complaint Form</h1>
+            <?php
+            try {
+                $complaintID = isset($_GET['complaintID']) ? $_GET['complaintID'] : "";
+                $query = "SELECT * from complaint 
+                                left join department on complaint.departmentID=department.department_ID 
+                                left join notetable on complaint.noteID=notetable.noteID
+                                left join attachment on complaint.attachmentID=attachment.attachmentID
+                                WHERE complaint.complaintID=:complaintID";
+                $stmt = $con->prepare($query);
+                $stmt->bindParam(":complaintID", $complaintID);
+                $stmt->execute();
+                $num = $stmt->rowCount();
+
+                if ($num > 0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    extract($row);
+                    $title = $title;
+                    $detail = $detail;
+                    $status = $status;
+                    $department = $category;
+                    $date = $createdate;
+                    $note = $notetext;
+                    $file = $filename;
+                }
+            }
+            // show error
+            catch (PDOException $exception) {
+                die('ERROR: ' . $exception->getMessage());
+            }
+
+
+            if ($_POST) {
+                $assign = $_POST['assign'];
+
+                //check complaint group
+                $complaint_group = $_POST['complaint_group'];
+
+                //check action
+                if ($_POST['action'] !== "") {
+                    $action = $_POST['action'];
+                } else {
+                    $action = "pending";
+                }
+
+                //insert into database
+                try {
+                    $query_in = "UPDATE complaint SET group_name=:group_name, status=:status, departmentID=:departmentID WHERE complaintID=:complaintID";
+                    $stmt_in = $con->prepare($query_in);
+                    $stmt_in->bindParam(':group_name', $complaint_group);
+                    $stmt_in->bindParam(':status', $action);
+                    $stmt_in->bindParam(':departmentID', $assign);
+                    $stmt_in->bindParam(':complaintID', $complaintID);
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Updated successfully.</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    }
+                }
+                // show errors
+                catch (PDOException $exception) {
+                    die('ERROR: ' . $exception->getMessage());
+                }
+            }
+            ?>
+
         </div><!-- End Page Title -->
         <section class="container section">
-            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo $_SERVER["PHP_SELF"] . "?complaintID=$complaintID"; ?>" method="POST" enctype="multipart/form-data">
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Title</div>
                     <div class="col-8 py-2 border border-3 rounded">Complaint Title</div>
@@ -48,34 +113,55 @@ include "reusable_components/user_session.php"
                     <div class="col-4  py-2">Current Status:</div>
                     <div class="col-8  py-2 px-0">
                         <div class="btn <?php if ($status == "pending" || $status == "keep_in_view") {
-                                                echo "btn-waring";
-                                            } else if ($status == "active") {
-                                                echo "btn-success";
-                                            } else {
-                                                echo "btn-secondary";
-                                            } ?>"><?php switch ($status) {
-                                                        case "pending":
-                                                            echo "Pending";
-                                                            break;
-                                                        case "keep_in_view":
-                                                            echo "Keep in View";
-                                                            break;
-                                                        case "active":
-                                                            echo "Active";
-                                                            break;
-                                                        default:
-                                                            echo "Closed";
-                                                    } ?></div></div>
+                                            echo "btn-warning";
+                                        } else if ($status == "active") {
+                                            echo "btn-success";
+                                        } else {
+                                            echo "btn-secondary";
+                                        } ?>"><?php switch ($status) {
+                                                    case "pending":
+                                                        echo "Pending";
+                                                        break;
+                                                    case "keep_in_view":
+                                                        echo "Keep in View";
+                                                        break;
+                                                    case "active":
+                                                        echo "Active";
+                                                        break;
+                                                    default:
+                                                        echo "Closed";
+                                                } ?></div>
                     </div>
+                </div>
                 </div>
                 <div class="row d-flex align-items-center my-3">
                     <div class="py-2 col-4">Group: </div>
                     <div class="col-8 px-0 ">
-                        <input list="list_category" name="category" id="category" class="form-control border border-3 rounded">
+                        <input list="list_category" name="complaint_group" class="form-control border border-3 rounded">
                         <datalist id="list_category">
-                            <option value="Computer Class Problem">
-                            <option value="Student Portal Problem">
-                            <option value="Hostel Problem">
+                            <?php
+                            $query_getexact_group = "SELECT group_name FROM complaint WHERE complaintID=:complaintID";
+                            $stmt_getexact_group = $con->prepare($query_getexact_group);
+                            $stmt_getexact_group->bindParam(":complaintID", $complaintID);
+                            $stmt_getexact_group->execute();
+                            $row_getexact_group = $stmt_getexact_group->fetch(PDO::FETCH_ASSOC);
+                            if ($row_getexact_group['group_name'] !== NULL) {
+                                echo "<option selected value='" . $row_getexact_group['group_name'] . "'>";
+                            }
+
+
+                            $query_getgroup = "SELECT group_name FROM complaint";
+                            $stmt_getgroup = $con->prepare($query_getgroup);
+                            $stmt_getgroup->execute();
+                            $num_getgroup = $stmt_getgroup->rowCount();
+
+                            if ($num_getgroup > 0) {
+                                while ($row_getgroup = $stmt_getgroup->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_getgroup);
+                                    echo "<option value='$group_name'>";
+                                }
+                            }
+                            ?>
                         </datalist>
                     </div>
                 </div>
@@ -86,7 +172,7 @@ include "reusable_components/user_session.php"
                 <div class="row d-flex align-items-center my-3">
                     <div class="py-2 col-4">Action: </div>
                     <div class="col-8 px-0 d-flex align-items-center">
-                        <input type="radio" name="action" value="accept" id="accept" class="ms-1 mx-2">
+                        <input type="radio" name="action" value="pending" id="accept" class="ms-1 mx-2" checked>
                         <label for="accept" class="me-4">Accept</label>
                         <input type="radio" name="action" value="closed" id="closed" class="ms-1 mx-2">
                         <label for="closed" class="me-4">Closed</label>
@@ -96,9 +182,25 @@ include "reusable_components/user_session.php"
                     <div class="py-2 col-4">Assign: </div>
                     <div class="col-8 px-0 d-flex align-items-center">
                         <select name="assign" id="assgin" class="form-select border border-3 rounded">
-                            <option value="default">None / Executive Departments</option>
+                            <?php
+                            $query_getdepartment = "SELECT * FROM department";
+                            $stmt_getdepartment = $con->prepare($query_getdepartment);
+                            $stmt_getdepartment->execute();
+                            $num_getdepartment = $stmt_getdepartment->rowCount();
+
+                            if ($num_getdepartment > 0) {
+                                while ($row_getdepartment = $stmt_getdepartment->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row_getdepartment);
+                                    echo "<option value='$department_ID'>$department_name</option>";
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
+                </div>
+                <div class="d-flex m-auto mt-5">
+                    <button type="submit" class="btn btn-secondary col-4">Update</button>
+                    <button type="button" class="btn btn-secondary ms-3 col-4" onclick="window.location.href = 'dashboard.php'">Cancel</button>
                 </div>
             </form>
         </section>

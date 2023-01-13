@@ -88,8 +88,8 @@ include "reusable_components/user_session.php"
                     echo "<div class='alert alert-danger'>Please make sure feild in </div>";
                 } else {
                     if (!empty($_POST['new_pass'])) {
-                        if (strlen($_POST['new_pass']) <= 8) {
-                            if ((!$uppercase || !$lowercase || !$number)) {
+                        if (strlen($_POST['new_pass']) >= 8) {
+                            if (($uppercase && $lowercase && $number)) {
                                 if ($_POST['new_pass'] !== "") {
                                     if ($_POST['new_pass'] !== $_POST['con_pass']) {
                                         $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";

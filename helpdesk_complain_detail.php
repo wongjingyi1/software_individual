@@ -89,7 +89,14 @@ include "reusable_components/user_session.php"
 
         </div><!-- End Page Title -->
         <section class="container section">
+<<<<<<< HEAD
             <form action="<?php echo $_SERVER["PHP_SELF"] . "?complaintID=$complaintID"; ?>" method="POST" enctype="multipart/form-data">
+=======
+            <?php
+            
+            ?>
+            <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
+>>>>>>> 28bc3c0b58efd61b0866323a50fc226bd15220cc
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4 py-2">Title</div>
                     <div class="col-8 py-2 border border-3 rounded">Complaint Title <?php echo $complaintID ?></div>
@@ -113,6 +120,7 @@ include "reusable_components/user_session.php"
                 <div class="row d-flex align-items-center my-3">
                     <div class="col-4  py-2">Current Status:</div>
                     <div class="col-8  py-2 px-0">
+<<<<<<< HEAD
                         <div class="btn <?php if ($status == "pending" || $status == "keep_in_view") {
                                             echo "btn-warning";
                                         } else if ($status == "active") {
@@ -132,6 +140,9 @@ include "reusable_components/user_session.php"
                                                     default:
                                                         echo "Closed";
                                                 } ?></div>
+=======
+                        <div class="btn btn-warning">Pending</div></div>
+>>>>>>> 28bc3c0b58efd61b0866323a50fc226bd15220cc
                     </div>
                 </div>
                 </div>

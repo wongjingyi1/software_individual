@@ -105,7 +105,7 @@ include "reusable_components/user_session.php"
                         $stmt_attachment = $con->prepare($query_attachment);
                         $put_null = NULL;
                         $stmt_attachment->bindParam(':complaintID', $put_null);
-                        $stmt_attachment->bindParam(':position', $put_null);
+                        $stmt_attachment->bindParam(':position', $target_directory);
                         $stmt_attachment->bindParam(':filename', $_FILES["complaint_image"]["name"]);
                         $stmt_attachment->bindParam(':type', $file_type);
 

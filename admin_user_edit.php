@@ -99,7 +99,7 @@ include "reusable_components/user_session.php"
                                 $file_upload_error_messages .= "<div>Your password must contain at least one uppercase, one lowercase and one number!</div>";
                             }
                         } else {
-                            $file_upload_error_messages .= "<div>Your password must contain at least 8 characters!</div>";
+                            $file_upload_error_messages .= "<div>Your password must contain at least 8 characters! </div>";
                         }
 
                         if (!empty($file_upload_error_messages)) {

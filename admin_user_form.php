@@ -93,6 +93,7 @@ include "reusable_components/user_session.php"
                             $stmt = $con->prepare($query);
                             // posted values
                             $username = htmlspecialchars(strip_tags($_POST['username']));
+                            $new_pass = $_POST['new_pass'];
 
                             // bind the parameters
                             $stmt->bindParam(':username', $username);

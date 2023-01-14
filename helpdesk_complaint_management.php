@@ -74,7 +74,7 @@ include "reusable_components/user_session.php"
                 </div>
                 <div class="col-md-5 col-12 d-flex align-items-center justify-content-md-center justify-content-start px-md-0 px-sm-5 px-0 mb-md-0 mb-3">
                     <div class="me-2">Group:</div>
-                    <button class="btn btn-dark me-2" type="button" data-bs-target="#create_group" data-bs-toggle="modal" onclick='pass_data()'>Create</button>
+                    <button class="btn btn-info me-2" type="button" data-bs-target="#create_group" data-bs-toggle="modal" onclick='pass_data()'>Create</button>
                     <div class="modal fade" id="create_group" tabindex="-1" aria-labelledby="modal_create_group" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -98,7 +98,7 @@ include "reusable_components/user_session.php"
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-secondary me-2" type="button" data-bs-target="#add_group" data-bs-toggle="modal" onclick='pass_data1()'>Add to ...</button>
+                    <button class="btn btn-info me-2" type="button" data-bs-target="#add_group" data-bs-toggle="modal" onclick='pass_data1()'>Add to ...</button>
                     <div class="modal fade" id="add_group" tabindex="-1" aria-labelledby="modal_add_group" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -155,9 +155,9 @@ include "reusable_components/user_session.php"
                         <th></th>
                         <th>No</th>
                         <th>Title</th></a>
-                        <th>Executive</th>
+                        <th>Department</th>
                         <th>Status</th>
-                        <th>Last Updated</th>
+                        <th>Create Date</th>
                         <th>Action</th>
                     </tr>
                     <?php 
@@ -165,7 +165,7 @@ include "reusable_components/user_session.php"
                             include 'config/database.php';
 
                             try {
-                                $query = "SELECT * from complaint WHERE group_name IS NULL";
+                                $query = "SELECT * from complaint LEFT JOIN department ON complaint.departmentID=department.department_ID";
                                 $stmt = $con->prepare($query);
                                 $stmt->execute();
                                 $num = $stmt->rowCount();
@@ -177,10 +177,10 @@ include "reusable_components/user_session.php"
                                                 <td class='text-end'><input type='checkbox' class='radio_checkbox' value='$complaintID-$title'></td>
                                                 <td class='text-center'>$complaintID</td>
                                                 <td>$title</td>
-                                                <td>Executive</td>
+                                                <td>$department_name</td>
                                                 <td class='status'>$status</td>
-                                                <td>$modifydate</td>
-                                                <td class='d-flex justify-content-center align-items-center'><i class='fa-regular fa-pen-to-square'></i><span style='padding:5px'><span><i class='fa-solid fa-eye '></i></td>
+                                                <td>$createdate</td>
+                                                <td class='d-flex justify-content-center align-items-center'><a href='helpdesk_complain_detail.php?complaintID=$complaintID'><i class='fa-regular fa-pen-to-square'></a></i><span style='padding:5px'><span><a href='complain_detail.php?complaintID=$complaintID'><i class='fa-solid fa-eye '></i></a></td>
                                             </tr>";
                                     }
                                 }

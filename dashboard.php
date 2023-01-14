@@ -46,16 +46,16 @@ include "reusable_components/user_session.php"
                 if ($num > 0) {
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         extract($row);
-                        if ($status=="Pending") {
+                        if ($status=="pending") {
                             $pending_status+=1;
                         }
-                        else if ($status=='Keep In View') {
+                        else if ($status=='kiv') {
                             $kiv_status+=1;
                         }
-                        else if ($status=='Active') {
+                        else if ($status=='active') {
                             $active_status+=1;
                         }
-                        else if ($status=='Closed') {
+                        else if ($status=='closed') {
                             $closed_status+=1;
                         }
                     }
@@ -67,6 +67,7 @@ include "reusable_components/user_session.php"
                 die('ERROR: ' . $exception->getMessage());
             }
             
+            //change here for display
             if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
                 $overall_pending_status=0;
                 $overall_kiv_status=0;
@@ -83,16 +84,16 @@ include "reusable_components/user_session.php"
                     if ($num > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
-                            if ($status=="Pending") {
+                            if ($status=="pending") {
                                 $overall_pending_status+=1;
                             }
-                            else if ($status=='Keep In View') {
+                            else if ($status=='kiv') {
                                 $overall_kiv_status+=1;
                             }
-                            else if ($status=='Active') {
+                            else if ($status=='active') {
                                 $overall_active_status+=1;
                             }
-                            else if ($status=='Closed') {
+                            else if ($status=='closed') {
                                 $overall_closed_status+=1;
                             }
                         }
@@ -122,16 +123,16 @@ include "reusable_components/user_session.php"
                     if ($num > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             extract($row);
-                            if ($status=="Pending") {
+                            if ($status=="pending") {
                                 $executive_pending_status+=1;
                             }
-                            else if ($status=='Keep In View') {
+                            else if ($status=='kiv') {
                                 $executive_kiv_status+=1;
                             }
-                            else if ($status=='Active') {
+                            else if ($status=='active') {
                                 $executive_active_status+=1;
                             }
-                            else if ($status=='Closed') {
+                            else if ($status=='closed') {
                                 $executive_closed_status+=1;
                             }
                         }
@@ -148,27 +149,27 @@ include "reusable_components/user_session.php"
         <section class="container section">
             <div class="text-decoration-underline py-4">Overview</div>
             <div class="d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row">
-                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#F7B800">
+                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#ffff33">
                     <div class="text-white text-center py-3">
                         <div>Pending</div>
                         <h3><?php echo $pending_status ?></h3>
                     </div>
                 </div>
 
-                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#F9D423">
+                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#ffff33">
                     <div class="text-white text-center">
                         <div>Keep In View</div>
                         <h3><?php echo $kiv_status ?></h3>
                     </div>
                 </div>
 
-                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#4CAF50">
+                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#ffff33">
                     <div class="text-white text-center">
                         <div>Active</div>
                         <h3><?php echo $active_status ?></h3>
                     </div>
                 </div>
-                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#00bcd4">
+                <div class="card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center" style="background-color:#ffff33">
                     <div class="text-white text-center">
                         <div>Closed</div>
                         <h3><?php echo $closed_status ?></h3>
@@ -179,14 +180,14 @@ include "reusable_components/user_session.php"
                 if ($role=='helpdesk' || $role=='admin' || $helpdesk==true) {
                     echo "<div class='text-decoration-underline py-4'>Helpdesk</div>
                             <div class='d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row'>
-                                <div class='card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center' style='background-color:#F7B800'>
+                                <div class='card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center' style='background-color:#4CAF50'>
                                     <div class='text-white text-center py-3'>
                                         <div>Pending</div>
                                         <h3>$overall_pending_status</h3>
                                     </div>
                                 </div>
                 
-                                <div class='card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center' style='background-color:#F9D423'>
+                                <div class='card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center' style='background-color:#4CAF50'>
                                     <div class='text-white text-center'>
                                         <div>Keep In View</div>
                                         <h3>$overall_kiv_status</h3>
@@ -199,7 +200,7 @@ include "reusable_components/user_session.php"
                                         <h3>$overall_active_status</h3>
                                     </div>
                                 </div>
-                                <div class='card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center' style='background-color:#00bcd4'>
+                                <div class='card border border-0 col-md-2 col-sm-5 col-12 d-flex justify-content-center' style='background-color:#4CAF50'>
                                     <div class='text-white text-center'>
                                         <div>Closed</div>
                                         <h3>$overall_closed_status</h3>

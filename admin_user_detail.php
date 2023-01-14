@@ -76,12 +76,11 @@ include "reusable_components/user_session.php"
                         echo $image_;
                     }
                                 ?>" width="150px">
-                    <label for="file-upload" class="btn btn-info mt-4 col-10">Custom Upload</label>
                     <input id="file-upload" type="file" name="image" />
                     <div class="m-4 text-start">
                         <label for="formGroupExampleInput" class="form-label">Role</label>
                         <input type="text" class="form-control col-10" id="formGroupExampleInput" placeholder="<?php echo $role 
-                                                                                                                ?>" disabled>
+                                                                                                                ?>">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" placeholder="<?php echo $name ?>" disabled>
                     </div>
@@ -90,12 +89,12 @@ include "reusable_components/user_session.php"
 
                     <div class="mb-3">
                         <label for="exampleInputUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="exampleInputusername" aria-describedby="username" name='username' value="<?php echo htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : $username, ENT_QUOTES);  
+                        <input type="text" class="form-control" id="exampleInputusername" disabled aria-describedby="username" name='username' value="<?php echo htmlspecialchars(isset($_POST['username']) ? $_POST['username'] : $username, ENT_QUOTES);  
                                                                                                                                                 ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="exampleInputEmail" name='email' value="<?php echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  
+                        <input type="text" class="form-control" id="exampleInputEmail" disabled name='email' value="<?php echo htmlspecialchars(isset($_POST['email']) ? $_POST['email'] : $email_, ENT_QUOTES);  
                                                                                                             ?>">
                     </div>
 

@@ -79,21 +79,10 @@
                 </li>
 
                 <li class='nav-item'>
-                  <a class='nav-link collapsed' data-bs-target='#group' data-bs-toggle='collapse' href='#'>
-                  <i class='fa-regular fa-folder'></i></i><span>Group</span><i class='fa-solid fa-chevron-down ms-auto'></i>
+                  <a class='nav-link collapsed' href='helpdesk_group.php'>
+                  <i class='fa-regular fa-folder'></i>    
+                    <span>Group</span>
                   </a>
-                  <ul id='group' class='nav-content collapse ' data-bs-parent='#sidebar-nav'>
-                    <li>
-                      <a href='#'>
-                        <span>○ Add New</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href='helpdesk_group.php'>
-                        </i><span>○ Group List</span>
-                      </a>
-                    </li>
-                  </ul>
                 </li>";
                       
         }
@@ -104,7 +93,7 @@
           echo "<li class='nav-heading'>Executive</li>
             
                 <li class='nav-item'>
-                  <a class='nav-link collapsed' href='#'>
+                  <a class='nav-link collapsed' href='executive_complaint_management.php'>
                   <i class='fa-solid fa-box-archive'></i> 
                     <span>Complaint Inbox</span>
                   </a>
@@ -126,7 +115,7 @@
                   </a>
                   <ul id='admin' class='nav-content collapse ' data-bs-parent='#sidebar-nav'>
                     <li>
-                      <a href='#'>
+                      <a href='admin_user_form.php'>
                         <span>○ Add New</span>
                         <!-- bi bi-person-plus-fill -->
                       </a>

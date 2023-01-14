@@ -30,14 +30,98 @@ include "reusable_components/user_session.php"
 </head>
 
 <body>
-<?php include "nvgtop.php" ?>
+    <?php include "nvgtop.php" ?>
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>Add New User</h1>
         </div><!-- End Page Title -->
         <section class="container section">
+        <?php
+            if ($_POST) {
+                $uppercase = preg_match('@[A-Z]@', $_POST['new_pass']);
+                $lowercase = preg_match('@[a-z]@', $_POST['new_pass']);
+                $number    = preg_match('@[0-9]@', $_POST['new_pass']);
 
-            <form class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"]; 
+                $email = $_POST['email'];
+                $role = $_POST['role'];
+                $department = $_POST['department'];
+
+
+                // error message is empty
+                $file_upload_error_messages = "";
+
+                if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['role']) || empty($_POST['department']) || empty($_POST['new_pass']) || empty($_POST['con_pass'])) {
+                    echo "<div class='alert alert-danger'>Please fill in all fields can not be empty!</div>";
+                } else {
+
+                    if (strlen($_POST['new_pass']) >= 8) {
+                        if ($uppercase && $lowercase && $number) {
+                            if ($_POST['new_pass'] !== $_POST['con_pass']) {
+                                $file_upload_error_messages .= "<div>Passwords do not match! Please type again.</div>";
+                            }
+                        } else {
+                            $file_upload_error_messages .= "<div>Your password must contain at least one uppercase, one lowercase and one number!</div>";
+                        }
+                    } else {
+                        $file_upload_error_messages .= "<div>Your password must contain at least 8 characters!</div>";
+                    }
+
+                    if (strlen($_POST['username']) >= 6) {
+                        if (strpos(trim($_POST['username']), ' ')) {
+                            $file_upload_error_messages .= "<div>Username should not contain whitespace!</div>";
+                        }
+                    } else {
+                        $file_upload_error_messages .= "<div>Your username must contain at least 6 characters!</div>";
+                    }
+
+
+
+                    // check if form was submitted
+                    if (!empty($file_upload_error_messages)) {
+                        echo "<div class='alert alert-danger'>";
+                        echo "<div>{$file_upload_error_messages}</div>";
+                        echo "</div>";
+                    } else {
+
+                        try {
+                            // write update query
+                            // in this case, it seemed like we have so many fields to pass and
+                            // it is better to label them and not use question marks
+                            $query = "INSERT INTO users
+                                    SET username=:username,email=:email, password=:password,role=:role, departmentID=:departmentid";
+                            // prepare query for excecution
+                            $stmt = $con->prepare($query);
+                            // posted values
+                            $username = htmlspecialchars(strip_tags($_POST['username']));
+                            $oldpassword = " ";
+                            if (!empty($_POST['new_pass'])) {
+                                $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
+                            }
+
+                            // bind the parameters
+                            $stmt->bindParam(':username', $username);
+                            $stmt->bindParam(':password', $oldpassword);
+                            $stmt->bindParam(':email', $email);
+                            $stmt->bindParam(':role', $role);
+                            $stmt->bindParam(':departmentid', $department);
+                            // Execute the query
+                            if ($stmt->execute()) {
+                                echo "<script type=\"text/javascript\"> window.location.href='admin_user_list.php'</script>";
+                            } else {
+                                echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                            }
+                        }
+                        // show errors
+                        catch (PDOException $exception) {
+                            die('ERROR: ' . $exception->getMessage());
+                        }
+                    }
+                }
+            }
+
+
+            ?>
+            <form class="d-flex mt-5" action="<?php echo $_SERVER["PHP_SELF"];
                                                 ?>" method="POST" enctype="multipart/form-data">
                 <div class="col-9 ms-5">
                     <div class="mb-3">
@@ -58,32 +142,32 @@ include "reusable_components/user_session.php"
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label text-end m-0 pe-2">Role</label>
-                        <select class="form-select" id="role" name="role" >
+                        <select class="form-select" id="role" name="role">
                             <option value="student" selected>Student</option>
                             <option value="helpdesk">Helpdesk</option>
                             <option value="executive">Executive</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                    <label for="department" class="form-label text-end m-0 pe-2">Department</label>
-                        <select class="form-select" id="department" name="department" >
-                            <?php 
-                                include 'config/database.php';
+                        <label for="department" class="form-label text-end m-0 pe-2">Department</label>
+                        <select class="form-select" id="department" name="department">
+                            <?php
+                            include 'config/database.php';
 
-                                $query = "SELECT * FROM department";
-                                $stmt = $con->prepare($query);
-                                $stmt->execute();
-            
-                                $num = $stmt->rowCount();
+                            $query = "SELECT * FROM department";
+                            $stmt = $con->prepare($query);
+                            $stmt->execute();
 
-                                if ($num > 0) {
-                                    echo "<option value=''> -- Optional --</option>";
-                                    // retrieve our table contents
-                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        extract($row);
-                                        echo "<option value='$department_ID'>$department_name</option>";
-                                    }
+                            $num = $stmt->rowCount();
+
+                            if ($num > 0) {
+                                echo "<option value=''> -- Optional --</option>";
+                                // retrieve our table contents
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    extract($row);
+                                    echo "<option value='$department_ID'>$department_name</option>";
                                 }
+                            }
                             ?>
                         </select>
                     </div>
@@ -94,107 +178,6 @@ include "reusable_components/user_session.php"
 
                 </div>
             </form>
-            <?php 
-                if ($_POST) {
-                    $uppercase = preg_match('@[A-Z]@', $_POST['new_pass']);
-                    $lowercase = preg_match('@[a-z]@', $_POST['new_pass']);
-                    $number    = preg_match('@[0-9]@', $_POST['new_pass']);
-
-                    $email=$_POST['email'];
-                    $role=$_POST['role'];
-                    $department=$_POST['department'];
-
-
-                    // error message is empty
-                    $file_upload_error_messages = "";
-            
-                    if (empty($_POST['username'])) {
-                        echo "<div class='alert alert-danger'>Please make sure have * column are not emplty!</div>";
-                    } else {
-                        if (!empty($_POST['new_pass']) || !empty($_POST['con_pass'])) {
-            
-                            if (empty($_POST['new_pass'])) {
-                                $file_upload_error_messages .= "<div>If want to change new passward then new password field can not be empty!</div>";
-                            }
-            
-                            if (empty($_POST['con_pass'])) {
-                                $file_upload_error_messages .= "<div>If want to change new passward then confirm password field can not be empty!</div>";
-                            }
-            
-                            if (!empty($file_upload_error_messages)) {
-                                echo "<div class='alert alert-danger'>";
-                                echo "<div>{$file_upload_error_messages}</div>";
-                                echo "</div>";
-                            }
-                        }
-            
-                        if (empty($file_upload_error_messages)) {
-                            if (strlen($_POST['username']) >= 6) {
-                                if (strpos(trim($_POST['username']), ' ')) {
-                                    $file_upload_error_messages .= "<div>Username should not contain whitespace!</div>";
-                                }
-                            } else {
-                                $file_upload_error_messages .= "<div>Your username must contain at least 6 characters!</div>";
-                            }
-            
-                            if (strlen($_POST['new_pass']) <= 8) {
-                                $file_upload_error_messages .= "<div>Your password must contain at least 8 characters!</div>";
-                            }
-            
-                            if ((!$uppercase || !$lowercase || !$number)) {
-                                $file_upload_error_messages .= "<div>Your password must contain at least one uppercase, one lowercase and one number!</div>";
-                            }
-            
-                            if ($_POST['new_pass'] !== $_POST['con_pass']) {
-                                $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";
-                            }
-            
-
-                            // check if form was submitted
-                            if (!empty($file_upload_error_messages)) {
-                                echo "<div class='alert alert-danger'>";
-                                echo "<div>{$file_upload_error_messages}</div>";
-                                echo "</div>";
-                            } else {
-            
-                                try {
-                                    // write update query
-                                    // in this case, it seemed like we have so many fields to pass and
-                                    // it is better to label them and not use question marks
-                                    $query = "INSERT INTO users
-                                    SET username=:username,email=:email, password=:password,role=:role, departmentID=:departmentid";
-                                    // prepare query for excecution
-                                    $stmt = $con->prepare($query);
-                                    // posted values
-                                    $username = htmlspecialchars(strip_tags($_POST['username']));
-                                    $oldpassword=" ";
-                                    if (!empty($_POST['new_pass'])) {
-                                        $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
-                                    }
-            
-                                    // bind the parameters
-                                    $stmt->bindParam(':username', $username);
-                                    $stmt->bindParam(':password', $oldpassword);
-                                    $stmt->bindParam(':email', $email);
-                                    $stmt->bindParam(':role', $role);
-                                    $stmt->bindParam(':departmentid', $department);
-                                    // Execute the query
-                                    if ($stmt->execute()) {
-                                        echo "<script type=\"text/javascript\"> window.location.href='admin_user_list.php'</script>";
-                                    } else {
-                                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
-                                    }
-                                }
-                                // show errors
-                                catch (PDOException $exception) {
-                                    die('ERROR: ' . $exception->getMessage());
-                                }
-                            }
-                        }
-                    }
-                }
-            
-            ?>
         </section>
     </main>
 

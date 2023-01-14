@@ -93,14 +93,10 @@ include "reusable_components/user_session.php"
                             $stmt = $con->prepare($query);
                             // posted values
                             $username = htmlspecialchars(strip_tags($_POST['username']));
-                            $oldpassword = " ";
-                            if (!empty($_POST['new_pass'])) {
-                                $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
-                            }
 
                             // bind the parameters
                             $stmt->bindParam(':username', $username);
-                            $stmt->bindParam(':password', $oldpassword);
+                            $stmt->bindParam(':password', $new_pass);
                             $stmt->bindParam(':email', $email);
                             $stmt->bindParam(':role', $role);
                             $stmt->bindParam(':departmentid', $department);

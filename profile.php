@@ -190,7 +190,7 @@ include "reusable_components/user_session.php"
                         // posted values
                         $username = htmlspecialchars(strip_tags($_POST['username']));
                         if (!empty($_POST['new_pass'])) {
-                            $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
+                            $oldpassword =  str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass'])));
                         }
 
                         $flag_same_image = false;

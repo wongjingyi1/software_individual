@@ -85,16 +85,21 @@ include "reusable_components/user_session.php"
 
                 //new password = new_pas ..... old password =
                 if (empty($_POST['username'])) {
-                    echo "<div class='alert alert-danger'>Please make sure have * column are not emplty!</div>";
+                    echo "<div class='alert alert-danger'>Please make sure feild in </div>";
                 } else {
                     if (!empty($_POST['new_pass'])) {
-
-                        if (empty($_POST['new_pass'])) {
-                            $file_upload_error_messages .= "<div>If want to change new passward then new password field can not be empty!</div>";
-                        }
-
-                        if (empty($_POST['con_pass'])) {
-                            $file_upload_error_messages .= "<div>If want to change new passward then confirm password field can not be empty!</div>";
+                        if (strlen($_POST['new_pass']) >= 8) {
+                            if (($uppercase && $lowercase && $number)) {
+                                if ($_POST['new_pass'] !== "") {
+                                    if ($_POST['new_pass'] !== $_POST['con_pass']) {
+                                        $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";
+                                    }
+                                }
+                            } else {
+                                $file_upload_error_messages .= "<div>Your password must contain at least one uppercase, one lowercase and one number!</div>";
+                            }
+                        } else {
+                            $file_upload_error_messages .= "<div>Your password must contain at least 8 characters!</div>";
                         }
 
                         if (!empty($file_upload_error_messages)) {
@@ -111,20 +116,6 @@ include "reusable_components/user_session.php"
                             }
                         } else {
                             $file_upload_error_messages .= "<div>Your username must contain at least 6 characters!</div>";
-                        }
-
-                        if (strlen($_POST['new_pass']) <= 8) {
-                            $file_upload_error_messages .= "<div>Your password must contain at least 8 characters!</div>";
-                        }
-
-                        if ((!$uppercase || !$lowercase || !$number)) {
-                            $file_upload_error_messages .= "<div>Your password must contain at least one uppercase, one lowercase and one number!</div>";
-                        }
-
-                        if ($_POST['new_pass'] !== "") {
-                            if ($_POST['new_pass'] !== $_POST['con_pass']) {
-                                $file_upload_error_messages .= "<div>Passwords do not match, please check again your new password or confirm password!</div>";
-                            }
                         }
 
                         if (!empty($_FILES["image"]["name"])) {
@@ -183,14 +174,19 @@ include "reusable_components/user_session.php"
                                 // in this case, it seemed like we have so many fields to pass and
                                 // it is better to label them and not use question marks
                                 $query = "UPDATE users
-                        SET username=:username, password=:password, profile=:image, helpdesk=:helpdesk WHERE userID=:id";
+                        SET username=:username, password=:password, image=:image, helpdesk=:helpdesk WHERE userID=:id";
                                 // prepare query for excecution
                                 $stmt = $con->prepare($query);
                                 // posted values
                                 $username = htmlspecialchars(strip_tags($_POST['username']));
                                 $oldpassword = " ";
                                 if (!empty($_POST['new_pass'])) {
-                                    $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
+                                    $oldpassword =  str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass'])));
+                                }
+
+                                $flag_same_image = false;
+                                if ($image == "NULL" ) {
+                                    $flag_same_image = true;
                                 }
 
                                 // bind the parameters
@@ -202,8 +198,8 @@ include "reusable_components/user_session.php"
                                 // Execute the query
                                 if ($stmt->execute()) {
                                     // if the image not same then remove previous one and not the default one
-                                    if (!strpos($old_image, "profile_pic.jpg")) {
-                                        unlink($old_image);
+                                    if (!$flag_same_image && !strpos($image, "profile_pic.jpg")) {
+                                        unlink($image);
                                     }
                                     header("Location: admin_user_list.php");
                                 } else {

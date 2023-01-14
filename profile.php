@@ -190,7 +190,7 @@ include "reusable_components/user_session.php"
                         // posted values
                         $username = htmlspecialchars(strip_tags($_POST['username']));
                         if (!empty($_POST['new_pass'])) {
-                            $oldpassword =  md5(str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass']))));
+                            $oldpassword =  str_replace(" ", "", htmlspecialchars(strip_tags($_POST['new_pass'])));
                         }
 
                         $flag_same_image = false;
@@ -267,8 +267,8 @@ include "reusable_components/user_session.php"
                         <input type="password" class="form-control" name="con_pass" id="com_pass">
                     </div>
                     <div class="d-flex mt-5">
-                        <button type="submit" class="btn btn-secondary col-4">Update</button>
-                        <button type="button" class="btn btn-secondary ms-3 col-4" onclick="window.location.href = 'dashboard.php'">Cancel</button>
+                        <button type="submit" class="btn btn-success col-4">Update</button>
+                        <button type="button" class="btn btn-danger ms-3 col-4" onclick="window.location.href = 'dashboard.php'">Cancel</button>
                     </div>
 
                 </div>

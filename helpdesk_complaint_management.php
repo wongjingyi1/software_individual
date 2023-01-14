@@ -74,7 +74,7 @@ include "reusable_components/user_session.php"
                 </div>
                 <div class="col-md-5 col-12 d-flex align-items-center justify-content-md-center justify-content-start px-md-0 px-sm-5 px-0 mb-md-0 mb-3">
                     <div class="me-2">Group:</div>
-                    <button class="btn btn-dark me-2" type="button" data-bs-target="#create_group" data-bs-toggle="modal" onclick='pass_data()'>Create</button>
+                    <button class="btn btn-info me-2" type="button" data-bs-target="#create_group" data-bs-toggle="modal" onclick='pass_data()'>Create</button>
                     <div class="modal fade" id="create_group" tabindex="-1" aria-labelledby="modal_create_group" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -98,7 +98,7 @@ include "reusable_components/user_session.php"
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-secondary me-2" type="button" data-bs-target="#add_group" data-bs-toggle="modal" onclick='pass_data1()'>Add to ...</button>
+                    <button class="btn btn-info me-2" type="button" data-bs-target="#add_group" data-bs-toggle="modal" onclick='pass_data1()'>Add to ...</button>
                     <div class="modal fade" id="add_group" tabindex="-1" aria-labelledby="modal_add_group" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

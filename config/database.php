@@ -1,9 +1,9 @@
 <?php
 // used to connect to the database
 $host = "localhost";
-$db_name = "complaint_system";
-$username = "complaint_system";
-$password = "FTueUImDoAAW-Cf9";
+$db_name = "group";
+$username = "cheekang";
+$password = "a442.IkkH@dNRf2B";
 
   
 try {

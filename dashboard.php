@@ -211,26 +211,26 @@ include "reusable_components/user_session.php"
                 else if ($role=='executive') {
                     echo "<div class='text-decoration-underline py-4'>Complaint Execution</div>
                             <div class='d-flex justify-content-evenly align-items-between pb-md-0 pb-3 row'>
-                                <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                <div class='card bg-warning bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Pending</div>
                                         <h3>$executive_pending_status</h3>
                                     </div>
                                 </div>
-                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                <div class='card bg-warning bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Keep In View</div>
                                         <h3>$executive_kiv_status</h3>
                                     </div>
                                 </div>
                 
-                                <div class='card bg-dark bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                <div class='card bg-warning bg-gradient border border-0 hover-blacktogrey col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Active</div>
                                         <h3>$executive_active_status</h3>
                                     </div>
                                 </div>
-                                <div class='card bg-secondary bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
+                                <div class='card bg-warning bg-gradient border border-0 hover-greytoback col-md-2 col-sm-5 col-12 d-flex justify-content-center'>
                                     <div class='text-white text-center'>
                                         <div>Closed</div>
                                         <h3>$executive_closed_status</h3>

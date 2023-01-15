@@ -60,7 +60,7 @@ include "reusable_components/user_session.php"
         </div><!-- End Page Title -->
         <section class="container section">
             <div class="row">
-                <div class="col-md-7 col-9 d-flex py-4 justify-content-center align-items-center text-center px-sm-5 px-0">
+                <div class=" col-12 d-flex py-4 justify-content-center align-items-center text-center px-sm-5 px-0">
                     <label for="list_complain" class="form-label text-end m-0 pe-2">Sent:</label>
                     <select class="form-select" id="list_complain" name="list_complain" onchange="filter(this)">
                         <option value="all">All</option>
